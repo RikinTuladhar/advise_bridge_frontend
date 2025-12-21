@@ -1,0 +1,963 @@
+<!doctype html>
+<html class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advisor | Advisebridge</title>
+  <link rel="shortcut icon" href="img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+  <script src="js/tailwindcss.js"></script>
+  <!-- <link href="css/aos.css" rel="stylesheet"> -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- Header Starts -->
+  <header class="fixed left-0 right-0 top-0 z-50 shadow-md">
+    <div class="bg-gradient-to-br from-[#296be3] to-[#21186b]">
+      <div class="max-w-[1400px] mx-auto px-8 text-white flex flex-col md:flex-row justify-end items-center md:gap-12">
+        <div class="relative inline-block text-left">
+          <button id="lang-btn" class="flex items-center gap-2 border-l border-r border-[#4c57c8] px-5 py-2 pr-3 cursor-pointer outline-none">
+            <img id="lang-flag" src="https://flagcdn.com/w20/us.png" alt="US Flag" class="w-4 h-3 border border-[#4c57c8] rounded-xs" loading="lazy">
+            <span id="lang-text" class="text-gray-200 text-sm">English</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow w-4 h-4 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <div id="lang-menu" class="hidden absolute z-50 right-0 mt-0 w-40 bg-white rounded-lg text-gray-700 shadow-2xl overflow-hidden">
+            <ul>
+              <li class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lang="English" data-flag="us">
+                <img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-3 rounded-xs" loading="lazy"> English
+              </li>
+              <li class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lang="Korean" data-flag="kr">
+                <img src="https://flagcdn.com/w20/kr.png" alt="KR" class="w-4 h-3 rounded-xs" loading="lazy"> Korean
+              </li>
+              <li class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lang="Spanish" data-flag="es">
+                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="w-4 h-3 rounded-xs" loading="lazy"> Spanish
+              </li>
+              <li class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lang="Vietnamese" data-flag="vn">
+                <img src="https://flagcdn.com/w20/vn.png" alt="VN" class="w-4 h-3 rounded-xs" loading="lazy"> Vietnamese
+              </li>
+              <li class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lang="French" data-flag="fr">
+                <img src="https://flagcdn.com/w20/fr.png" alt="VN" class="w-4 h-3 rounded-xs" loading="lazy"> French
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <div class="bg-[#fff]">
+      <div class="max-w-[1400px] mx-auto px-8 py-4 lg:py-4 relative z-1">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center min-w-[220px] relative">
+            <a href="index.html">
+              <img src="img/logo_blue.svg" alt="AdviseBridge" class="h-8 lg:h-12 w-auto" loading="lazy">
+            </a>
+          </div>
+          <nav id="mobile-nav" class="hidden lg:flex min-h-screen lg:min-h-auto w-full justify-center lg:justify-end items-center fixed left-0 right-0 top-0 bottom-0 z-50 lg:relative bg-[#1a1e6b] lg:bg-transparent">
+            <button id="menu-close" class="flex justify-center items-center w-12 h-12 ml-auto mt-4 mr-4 lg:hidden text-white absolute -right-4 -top-4 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-circle-x-icon hover:text-red-500 transition-colors duration-200">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m15 9-6 6"/>
+                <path d="m9 9 6 6"/>
+              </svg>
+            </button>
+            <ul class="navigation w-full lg:w-auto max-h-[100vh] lg:max-h-auto overflow-y-auto space-y-1 lg:space-y-0 mx-8 lg:mx-0 py-8 lg:py-0 text-base flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-8">
+              <li class="block lg:hidden px-0 py-4 rounded"><a href="index.html"><img src="img/logo/logo_white.svg" alt="Lord's Light Academy Logo" class="h-8 md:h-12 w-auto lg:absolute lg:top-[-42px] lg:z-1" loading="lazy"></a></li>
+              <li><a href="student.html" class="text-[#CBD5E1] lg:text-gray-700 hover:text-[#8ba5e0] lg:hover:text-[#0071e3] font-normal transition w-full lg:w-auto lg:flex justify-center items-center">Student</a></li>
+              <li><a href="advisor.html" class="text-[#CBD5E1] lg:text-gray-700 hover:text-[#8ba5e0] lg:hover:text-[#0071e3] font-normal transition w-full lg:w-auto lg:flex justify-center items-center active">Advisor</a></li>
+              <li><a href="institution.html" class="text-[#CBD5E1] lg:text-gray-700 hover:text-[#8ba5e0] lg:hover:text-[#0071e3] font-normal transition w-full lg:w-auto lg:flex justify-center items-center">Institution</a></li>
+              <li><a href="explore.html" class="text-[#CBD5E1] lg:text-gray-700 hover:text-[#8ba5e0] lg:hover:text-[#0071e3] font-normal transition w-full lg:w-auto lg:flex justify-center items-center">Explore</a></li>
+              <li class="flex flex-col sm:flex-row gap-2 mt-8 lg:mt-0">
+                <a href="login.html" class="bg-transparent border border-gray-400 hover:border-[#3c65e3] px-6 py-2 text-white rounded lg:text-gray-700 hover:bg-[#2b54d2] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Login</a>
+                <a href="register.html" class="bg-[#3c65e3] px-6 py-2 rounded lg:text-[#fff] hover:bg-[#2b54d2] text-white lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Register</a>
+              </li>
+            </ul>
+          </nav>
+
+          <button class="lg:hidden flex flex-col justify-center gap-1.5 cursor-pointer" id="menu-toggle">
+            <span class="block w-6 h-[2px] bg-gray-800"></span>
+            <span class="block w-6 h-[2px] bg-gray-800"></span>
+            <span class="block w-6 h-[2px] bg-gray-800"></span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Header Ends -->
+
+  <!-- Seperator Margin Inner Starts -->
+  <div class="bg-gradient-to-br from-[#296be3] to-[#21186b] mt-[96px] lg:mt-[116px] py-6">
+    <div class="max-w-[1400px] w-full mx-auto px-8 py-2 lg:py-4 flex flex-col lg:flex-row justify-end">
+      <div class="mb-0 py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
+        <h2 class="text-lg lg:text-xl font-light leading-[1.2] max-w-[600px] tracking-wide">
+          Welcome, <span class="text-[#e7a62a]">Advisor</span> Page
+        </h2>
+      </div>
+    </div>
+  </div>
+  <!-- Seperator Margin Inner Ends -->
+
+  <main class="flex flex-col flex-1 w-full overflow-hidden">
+
+    <!-- Student Hero Section Starts -->
+    <section class="bg-white pt-12 pb-6 lg:pt-24 lg:pb-20">
+      <div class="max-w-[1400px] mx-auto px-8 flex flex-col lg:items-center lg:flex-row bg-transparent relative">
+        <div class="full lg:w-1/3 mb-8 lg:mb-0 flex lg:justify-center items-center relative z-1" data-aos="fade-right" data-aos-duration="1000">
+          <img src="img/advisor.webp" alt="" class="max-w-[200px] lg:max-w-[60%]" loading="lazy">
+        </div>
+
+        <div class="w-full lg:w-2/3 relative z-2" data-aos="fade-left" data-aos-duration="1000">
+          <div class="mb-6 max-w-[750px]">
+            <h3 class="text-gray-900 text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+              Join the Advisor Network
+            </h3>
+            <hr class="w-12 border-t-2 border-[#0071e3] mb-4">
+            <p class="text-gray-700 text-sm lg:text-base lg:max-w-[800px] mb-8">Find programs and top-ranking institutions that align with your student's background</p>
+            <div class="btn-wrap flex flex-wrap">
+              <a href="register.html" class="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer">
+                Get Started 
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    <!-- Student Hero Section Ends -->
+
+    <!-- Connection Section Starts-->
+    <section class="bg-white pb-8 lg:pb-24">
+      <div class="max-w-[1400px] mx-auto px-8">
+        <div class="bg-gradient-to-br from-[#296be3] to-[#21186b] px-6 py-12 pb-0 lg:pb-12 rounded-2xl lg:rounded-4xl">
+          
+          <div class="xl:px-8 flex flex-col md:flex-row gap-0 lg:gap-16">
+
+            <div class="flex-1 overflow-hidden cursor-auto mb-12 lg:mb-0">
+              <div class="bg-gradient-to-br from-[#D65191] to-[#C7337A] relative w-20 h-20 mb-6 rounded-full border-2 border-white/30 flex items-center justify-center mx-auto">
+                <svg width="42" height="42" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve" fill="#fff" class="-mt-1">
+                <path d="M46.5,21.7c0.9,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5H34.8V17c0-4.9-3.3-9.3-8.1-10.5l-1.2-0.3V1.5C25.5,0.7,24.9,0,24,0
+                  s-1.5,0.7-1.5,1.5v4.7l-1.2,0.3c-4.8,1.2-8.1,5.6-8.1,10.5v1.5H1.5c-0.9,0-1.5,0.7-1.5,1.5s0.7,1.5,1.5,1.5h2.3v23.2H1.5
+                  c-0.9,0-1.5,0.7-1.5,1.5S0.7,48,1.5,48h44.9c0.9,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5h-2.3V21.7H46.5z M16.3,44.9H7V21.7h9.3V44.9z
+                  M16.3,17c0-4.3,3.5-7.7,7.7-7.7s7.7,3.5,7.7,7.7v1.5H16.3V17z M28.6,44.9h-9.3V21.7h9.3V44.9z M41,44.9h-9.3V21.7H41V44.9z"/>
+                </svg>
+              </div>
+              <h6 class="text-gray-100 text-lg lg:text-xl font-bold leading-tight mb-2 lg:mb-2 text-center">University Matches</h6>
+              <p class="text-gray-300 text-sm font-light text-center">
+                AdviseBridge streamlines your search, helping you find the right universities and programs.
+              </p>
+            </div>
+
+            <div class="flex-1 overflow-hidden cursor-auto mb-12 lg:mb-0">
+              <div class="bg-gradient-to-br from-[#0071E3] to-[#1A69B9] relative w-20 h-20 mb-6 rounded-full border-2 border-white/30 flex items-center justify-center mx-auto">
+                <svg width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve" fill="#fff">
+                  <g>
+                    <path class="st0" d="M12.6,35.8c0.5-1,1-1.8,1.6-2.5c1.5-1.5,3.5-2.3,5.7-2.3h7.5c2.2,0,4.2,0.8,5.7,2.3c0.7,0.7,1.2,1.5,1.7,2.4
+                      c0.1,0.3,0.4,0.6,0.7,0.7c0.4,0.2,0.8,0.2,1.2,0c0.4-0.2,0.6-0.5,0.7-0.7l0,0c0.2-0.3,0.3-0.7,0.1-1l0,0c-0.5-1.3-1.3-2.4-2.3-3.3
+                      c-1.3-1.3-2.8-2.2-4.5-2.7l-0.2-0.1l0.2-0.2c2.5-2.1,3.9-5.1,3.9-8.3c0-6-4.9-10.8-10.8-10.8c-6,0-10.8,4.9-10.8,10.8
+                      c0,3.3,1.4,6.3,3.9,8.3l0.2,0.2l-0.2,0.1c-1.7,0.5-3.2,1.4-4.5,2.7c-0.9,0.9-1.6,1.9-2.3,3.3c-0.2,0.4-0.2,0.7,0,1l0,0
+                      c0.1,0.4,0.4,0.6,0.7,0.7c0.4,0.2,0.7,0.2,1,0C12.3,36.4,12.5,36.2,12.6,35.8z M15.9,20.3c0-4.4,3.6-8.1,8.1-8.1s8.1,3.6,8.1,8.1
+                      c0,4.4-3.6,8.1-8.1,8.1C19.6,28.2,15.9,24.6,15.9,20.3z"/>
+                    <path class="st0" d="M46.6,16c-0.1-0.4-0.4-0.6-0.7-0.8c-0.3-0.2-0.7-0.2-1,0c-0.8,0.3-1.1,1-0.8,1.7c0.8,2.2,1.2,4.6,1.2,7.1
+                      c0,11.7-9.5,21.2-21.2,21.2S2.8,35.7,2.8,24S12.3,2.8,24,2.8c2.4,0,4.9,0.4,7.1,1.2c0.7,0.3,1.5-0.1,1.7-0.8
+                      c0.3-0.7-0.1-1.5-0.8-1.7C29.3,0.5,26.6,0,24,0C10.8,0,0,10.8,0,24c0,13.2,10.8,24,24,24c13.2,0,24-10.8,24-24
+                      C48,21.4,47.5,18.7,46.6,16z"/>
+                    <path class="st0" d="M38.1,13.6c0.3,0.3,0.6,0.4,1,0.4s0.7-0.1,1-0.4l7.5-7.5c0.5-0.5,0.5-1.4,0-1.9c-0.5-0.5-1.4-0.5-1.9,0
+                      l-6.6,6.5l-2.8-2.8c-0.3-0.3-0.6-0.4-1-0.4s-0.7,0.1-1,0.4c-0.3,0.3-0.4,0.6-0.4,1s0.1,0.7,0.4,1l0,0L38.1,13.6z"/>
+                  </g>
+                </svg>
+              </div>
+              <h6 class="text-gray-100 text-lg lg:text-xl font-bold leading-tight mb-2 lg:mb-2 text-center">High Acceptance Success</h6>
+              <p class="text-gray-300 text-sm font-light text-center">
+                Our platform helps advisors manage applications and boost student acceptances.
+              </p>
+            </div>
+
+            <div class="flex-1 overflow-hidden cursor-auto mb-12 lg:mb-0">
+              <div class="bg-gradient-to-br from-[#53AE56] to-[#518E53] relative w-20 h-20 mb-6 rounded-full border-2 border-white/30 flex items-center justify-center mx-auto">
+                <svg width="36" height="36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve" fill="#fff">
+                  <g>
+                    <path d="M47.8,17.5c-0.1-1-0.3-1.9-0.6-2.8c-0.4-1.6-2-3-3.8-3.3l-0.2,0c-0.7-0.1-4.9-0.5-9.2-0.7l-1.6-0.1l2.2-1.4
+                      c1.1-1,1.7-2.4,1.7-3.9c0-2.9-2.5-5.3-5.6-5.3c-2.6,0-4.9,1.8-5.5,4.3L24,12l-1.4-7.7C22.1,1.8,19.8,0,17.1,0
+                      c-3.1,0-5.6,2.4-5.6,5.3c0,1.5,0.6,2.9,1.8,3.9l2.2,1.4l-1.6,0.1c-4.3,0.2-8.6,0.6-9.3,0.7c-1.8,0.3-3.4,1.7-3.8,3.4
+                      c-0.2,0.8-0.4,1.7-0.5,2.8c-0.1,1-0.2,2-0.2,2.8c0,1.7,1.2,3.1,2.9,3.5l0.4,0.1l0,0.4c-0.1,1.1-0.3,4.9-0.3,7
+                      c0.1,3.3,0.3,6.3,0.8,9.1c0.6,3.3,3.7,6.4,7.1,6.9c1.9,0.3,8.4,0.7,12.5,0.7h1c4.2,0,10.6-0.4,12.5-0.7c3.3-0.5,6.4-3.5,7.1-6.9
+                      c0.5-2.8,0.8-5.8,0.8-9.1c0-2-0.2-5.8-0.3-7l0-0.4l0.4-0.1c1.8-0.4,2.9-1.8,2.9-3.5C48,19.5,47.9,18.6,47.8,17.5z M26.8,11.1
+                      L28,4.8c0.3-1.3,1.5-2.2,2.9-2.2c1.6,0,2.9,1.2,2.9,2.7c0,0.6-0.2,1.3-0.7,1.7l-5.8,3.7l-0.6,0.6L26.8,11.1z M14.9,7.1
+                      c-0.4-0.5-0.7-1.1-0.7-1.7c0-1.5,1.3-2.7,2.9-2.7c1.4,0,2.6,0.9,2.9,2.2l1.2,6.3L14.9,7.1z M42.3,31.2c-0.1,3.2-0.3,6.1-0.8,8.7
+                      c-0.2,1.1-0.8,2.2-1.8,3.1c-0.9,0.9-2,1.5-3.1,1.7c-1.8,0.3-8.2,0.7-12.1,0.7h-1c-4,0-10.3-0.4-12.1-0.7c-1.1-0.2-2.2-0.8-3.2-1.7
+                      c-0.9-0.9-1.6-2-1.8-3.1c-0.5-2.7-0.7-5.5-0.8-8.7c0-1.3,0.1-3.8,0.3-6.8l0.1-1l0.5,0c3.7-0.1,7.5-0.1,11.2-0.2l0.5,0v14.7
+                      c0,1,0.6,1.9,1.5,2.3c0.8,0.4,1.7,0.3,2.3-0.2c0.5-0.4,1.1-0.9,1.8-1.5l0.3-0.3l0.3,0.3c0.7,0.6,1.2,1.1,1.8,1.5
+                      c0.6,0.5,1.5,0.6,2.3,0.2c0.9-0.4,1.5-1.3,1.5-2.3V23.3l0.5,0c3.7,0,7.5,0.1,11.2,0.2l0.5,0l0.1,1c0.1,2.5,0.2,4.6,0.3,6l0,0.2
+                      L42.3,31.2z M20.8,37.6V23.2h6.5v14.4l-0.9-0.8c-0.3-0.2-0.5-0.5-0.8-0.8c-0.4-0.4-1-0.6-1.6-0.6c-0.6,0-1.1,0.2-1.6,0.6
+                      c-0.3,0.3-0.6,0.5-0.8,0.8L20.8,37.6z M44.8,20.9c-0.1,0-9.3-0.3-20.7-0.3c-10.4,0-19.2,0.2-20.9,0.3l-0.3,0l-0.1-0.3
+                      c0-0.1-0.1-0.2-0.1-0.3c0-0.7,0.1-1.5,0.2-2.4C3,17,3.1,16.1,3.3,15.4S4.2,14.1,5,14c0.7-0.1,4.8-0.5,9-0.7l7-0.3c0,0,1.4,0,2.8,0
+                      h0.2c0.7,0,1.4,0,1.9,0c0.5,0,0.9,0,0.9,0l7.1,0.3c4.2,0.2,8.3,0.6,9,0.7c0.8,0.1,1.6,0.8,1.8,1.4c0.2,0.7,0.4,1.5,0.5,2.4
+                      c0.1,0.9,0.2,1.8,0.2,2.4l0.3,0.7L44.8,20.9z"/>
+                  </g>
+                </svg>
+              </div>
+              <h6 class="text-gray-100 text-lg lg:text-xl font-bold leading-tight mb-2 lg:mb-2 text-center">Placement Rewards</h6>
+              <p class="text-gray-300 text-sm font-light text-center">
+                Partner with advisors, access resources, and earn by guiding students.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Connection Section Ends-->
+
+    <!-- Student's Study Areas Starts-->
+    <section class="bg-blue-50 py-12 lg:py-24">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="px-8 mb-8">
+          <h3 class="text-gray-900 text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+            What students are looking for
+          </h3>
+          <hr class="w-12 border-t-2 border-[#0071e3] mb-4">
+          <p class="text-gray-700 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px]">AdviseBridge helps you explore top subjects at leading universities in the USA</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-6 mx-auto px-8">
+
+          <div class="bg-white flex flex-col rounded-lg lg:rounded-xl shadow-lg relative">
+            <div class="w-full overflow-hidden rounded-tl-lg rounded-tr-lg mb-6 aspect-[16/9] relative">
+              <!-- <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-amber-50 text-[12px] font-semibold text-amber-700 shadow">Private</div> -->
+              <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-sky-100 text-[12px] font-semibold text-sky-700 shadow">Public</div>
+              <div class="absolute z-3 right-2 top-2 rounded px-2 py-1 flex items-center bg-zinc-100 text-[12px] font-semibold text-zinc-700 shadow">University</div>
+              <img src="img/colleges/collges-banner-1.webp" alt="img 1" class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:rotate-[-5deg] group-hover:scale-120 relative z-1" loading="lazy">
+              <div class="absolute left-0 right-0 top-0 bottom-0 z-2 inset-0 bg-gradient-to-b from-black/10 to-black/50 w-full h-full"></div>
+            </div>
+            <div class="-mt-16 relative z-3 px-4">
+              <div class="bg-white shadow-[inset_0_8px_16px_rgba(0,0,0,0.15)] relative w-20 h-20 mb-2 rounded-full border-4 border-white flex items-center justify-center">
+                <img width="48" height="48" class="rounded-full" src="img/colleges/colleges-1.webp" alt="The University of Wisconsin , La-Crosse" title="The University of Wisconsin , La-Crosse">
+              </div>
+              <div class="mb-4">
+                <h6 class="text-lg text-gray-900 font-bold mb-4 lg:mb-2 leading-6 truncate">The University of Wisconsin, La-Crosse</h6>
+                <p class="text-sm text-gray-700 font-light">
+                  <div class="flex space-x-2 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="min-width: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-gray-500 mt-[2px]"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p class="text-gray-600 text-sm mb-0">Superior, Wisconsin, United States</p>
+                  </div>
+                </p>
+              </div>
+              <ul class="listing listing-sm lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-2 mb-4">
+                <li>
+                  <span class="que">Int'l students:</span>
+                  <span class="ans">1900+</span>
+                </li>
+                <li>
+                  <span class="que">Total programs:</span>
+                  <span class="ans">89</span>
+                </li>
+              </ul>
+
+              <!-- <ul class="lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-1 mb-6">
+                <li class="text-base font-bold">Biology</li>
+                <li class="text-xs font-normal !text-teal-600">+ 88 MORE COURSES</li>
+              </ul>
+
+              <div class="mt-4 flex flex-wrap gap-1">
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Bachelor's Degree</span>
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Master's Degree</span>
+              </div>
+              <div class="border-t border-gray-200 mt-4 py-4 flex flex-wrap gap-1">
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Jan/Feb</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">May/June</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Aug/Sept</span>
+              </div>  -->
+            </div>
+            <div class="mt-auto p-4 pt-0">
+              <a href="institution-details.html" class="bg-transparent border border-gray-400 hover:border-[#3c65e3] px-6 py-2 rounded text-gray-700 hover:bg-[#2b54d2] hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Find Programs</a>
+            </div>
+            
+          </div>
+
+          <div class="bg-white flex flex-col rounded-lg lg:rounded-xl shadow-lg relative">
+            <div class="w-full overflow-hidden rounded-tl-lg rounded-tr-lg mb-6 aspect-[16/9] relative">
+              <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-amber-50 text-[12px] font-semibold text-amber-700 shadow">Private</div>
+              <!-- <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-sky-100 text-[12px] font-semibold text-sky-700 shadow">Public</div> -->
+              <div class="absolute z-3 right-2 top-2 rounded px-2 py-1 flex items-center bg-zinc-100 text-[12px] font-semibold text-zinc-700 shadow">University</div>
+              <img src="img/colleges/collges-banner-2.webp" alt="img 2" class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:rotate-[-5deg] group-hover:scale-120 relative z-1" loading="lazy">
+              <div class="absolute left-0 right-0 top-0 bottom-0 z-2 inset-0 bg-gradient-to-b from-black/10 to-black/50 w-full h-full"></div>
+            </div>
+            <div class="-mt-16 relative z-3 px-4">
+              <div class="bg-white shadow-[inset_0_8px_16px_rgba(0,0,0,0.15)] relative w-20 h-20 mb-2 rounded-full border-4 border-white flex items-center justify-center">
+                <img width="48" height="48" class="rounded-full" src="img/colleges/colleges-2.webp" alt="The University of Wisconsin , La-Crosse" title="The University of Wisconsin , La-Crosse">
+              </div>
+              <div class="mb-4">
+                <h6 class="text-lg text-gray-900 font-bold mb-4 lg:mb-2 leading-6 truncate">New Jersey Institute of Technology</h6>
+                <p class="text-sm text-gray-700 font-light">
+                  <div class="flex space-x-2 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="min-width: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-gray-500 mt-[2px]"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p class="text-gray-600 text-sm mb-0">New Jersey, United States</p>
+                  </div>
+                </p>
+              </div>
+              <ul class="listing listing-sm lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-2 mb-4">
+                <li>
+                  <span class="que">Int'l students:</span>
+                  <span class="ans">1900+</span>
+                </li>
+                <li>
+                  <span class="que">Total programs:</span>
+                  <span class="ans">89</span>
+                </li>
+              </ul>
+
+              <!-- <ul class="lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-1 mb-6">
+                <li class="text-base font-bold">Computer Science</li>
+                <li class="text-xs font-normal !text-teal-600">+ 88 MORE COURSES</li>
+              </ul>
+
+              <div class="mt-4 flex flex-wrap gap-1">
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Bachelor's Degree</span>
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Master's Degree</span>
+              </div>
+              <div class="border-t border-gray-200 mt-4 py-4 flex flex-wrap gap-1">
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Jan/Feb</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">May/June</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Aug/Sept</span>
+              </div> -->
+            </div>
+            <div class="mt-auto p-4 pt-0">
+              <a href="institution-details.html" class="bg-transparent border border-gray-400 hover:border-[#3c65e3] px-6 py-2 rounded text-gray-700 hover:bg-[#2b54d2] hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Find Programs</a>
+            </div>
+            
+          </div>
+
+          <div class="bg-white flex flex-col rounded-lg lg:rounded-xl shadow-lg relative">
+            <div class="w-full overflow-hidden rounded-tl-lg rounded-tr-lg mb-6 aspect-[16/9] relative">
+              <!-- <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-amber-50 text-[12px] font-semibold text-amber-700 shadow">Private</div> -->
+              <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-sky-100 text-[12px] font-semibold text-sky-700 shadow">Public</div>
+              <div class="absolute z-3 right-2 top-2 rounded px-2 py-1 flex items-center bg-zinc-100 text-[12px] font-semibold text-zinc-700 shadow">University</div>
+              <img src="img/colleges/collges-banner-3.webp" alt="Blog 1" class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:rotate-[-5deg] group-hover:scale-120 relative z-1" loading="lazy">
+              <div class="absolute left-0 right-0 top-0 bottom-0 z-2 inset-0 bg-gradient-to-b from-black/10 to-black/50 w-full h-full"></div>
+            </div>
+            <div class="-mt-16 relative z-3 px-4">
+              <div class="bg-white shadow-[inset_0_8px_16px_rgba(0,0,0,0.15)] relative w-20 h-20 mb-2 rounded-full border-4 border-white flex items-center justify-center">
+                <img width="48" height="48" class="rounded-full" src="img/colleges/colleges-3.webp" alt="The University of Wisconsin , La-Crosse" title="The University of Wisconsin , La-Crosse">
+              </div>
+              <div class="mb-4">
+                <h6 class="text-lg text-gray-900 font-bold mb-4 lg:mb-2 leading-6 truncate">Monroe University</h6>
+                <p class="text-sm text-gray-700 font-light">
+                  <div class="flex space-x-2 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="min-width: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-gray-500 mt-[2px]"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p class="text-gray-600 text-sm mb-0">New York, United States</p>
+                  </div>
+                </p>
+              </div>
+              <ul class="listing listing-sm lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-2 mb-4">
+                <li>
+                  <span class="que">Int'l students:</span>
+                  <span class="ans">1900+</span>
+                </li>
+                <li>
+                  <span class="que">Total programs:</span>
+                  <span class="ans">17</span>
+                </li>
+              </ul>
+
+              <!-- <ul class="lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-1 mb-6">
+                <li class="text-base font-bold">Community Health</li>
+                <li class="text-xs font-normal !text-teal-600">+ 16 MORE COURSES</li>
+              </ul>
+
+              <div class="mt-4 flex flex-wrap gap-1">
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Bachelor's Degree</span>
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Master's Degree</span>
+              </div>
+              <div class="border-t border-gray-200 mt-4 py-4 flex flex-wrap gap-1">
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Jan/Feb</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">May/June</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Aug/Sept</span>
+              </div> -->
+            </div>
+            <div class="mt-auto p-4 pt-0">
+              <a href="institution-details.html" class="bg-transparent border border-gray-400 hover:border-[#3c65e3] px-6 py-2 rounded text-gray-700 hover:bg-[#2b54d2] hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Find Programs</a>
+            </div>
+            
+          </div>
+
+          <div class="bg-white flex flex-col rounded-lg lg:rounded-xl shadow-lg relative">
+            <div class="w-full overflow-hidden rounded-tl-lg rounded-tr-lg mb-6 aspect-[16/9] relative">
+              <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-amber-50 text-[12px] font-semibold text-amber-700 shadow">Private</div>
+              <!-- <div class="absolute z-3 left-2 top-2 rounded px-2 py-1 flex items-center bg-sky-100 text-[12px] font-semibold text-sky-700 shadow">Public</div> -->
+              <div class="absolute z-3 right-2 top-2 rounded px-2 py-1 flex items-center bg-zinc-100 text-[12px] font-semibold text-zinc-700 shadow">University</div>
+              <img src="img/colleges/collges-banner-1.webp" alt="Blog 1" class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:rotate-[-5deg] group-hover:scale-120 relative z-1" loading="lazy">
+              <div class="absolute left-0 right-0 top-0 bottom-0 z-2 inset-0 bg-gradient-to-b from-black/10 to-black/50 w-full h-full"></div>
+            </div>
+            <div class="-mt-16 relative z-3 px-4">
+              <div class="bg-white shadow-[inset_0_8px_16px_rgba(0,0,0,0.15)] relative w-20 h-20 mb-2 rounded-full border-4 border-white flex items-center justify-center">
+                <img width="48" height="48" class="rounded-full" src="img/colleges/colleges-1.webp" alt="The University of Wisconsin , La-Crosse" title="The University of Wisconsin , La-Crosse">
+              </div>
+              <div class="mb-4">
+                <h6 class="text-lg text-gray-900 font-bold mb-4 lg:mb-2 leading-6 truncate">The University of Wisconsin, La-Crosse</h6>
+                <p class="text-sm text-gray-700 font-light">
+                  <div class="flex space-x-2 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="min-width: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin text-gray-500 mt-[2px]"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p class="text-gray-600 text-sm mb-0">Superior, Wisconsin, United States</p>
+                  </div>
+                </p>
+              </div>
+              <ul class="listing listing-sm lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-2 mb-4">
+                <li>
+                  <span class="que">Int'l students:</span>
+                  <span class="ans">1900+</span>
+                </li>
+                <li>
+                  <span class="que">Total programs:</span>
+                  <span class="ans">89</span>
+                </li>
+              </ul>
+
+              <!-- <ul class="lg:mt-4 grid grid-cols-1 gap-x-8 gap-y-1 mb-6">
+                <li class="text-base font-bold">Biology</li>
+                <li class="text-xs font-normal !text-teal-600">+ 88 MORE COURSES</li>
+              </ul>
+
+              <div class="mt-4 flex flex-wrap gap-1">
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Bachelor's Degree</span>
+                <span class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-xs font-normal text-gray-700">Master's Degree</span>
+              </div>
+
+              <div class="border-t border-gray-200 mt-4 py-4 flex flex-wrap gap-1">
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Jan/Feb</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">May/June</span>
+                <span class="rounded-full px-2 py-1 border border-gray-200 text-xs font-normal text-gray-500">Aug/Sept</span>
+              </div> -->
+
+            </div>
+            <div class="mt-auto p-4 pt-0">
+              <a href="institution-details.html" class="bg-transparent border border-gray-400 hover:border-[#3c65e3] px-6 py-2 rounded text-gray-700 hover:bg-[#2b54d2] hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center">Find Programs</a>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- Student's Study Areas Ends-->
+
+
+
+    <!-- How Advisbridge works for advisors Starts-->
+    <section class="bg-gradient-to-br from-[#296be3] to-[#21186b] py-12 lg:py-24 pb-32 lg:pb-24 relative">
+      <div class="max-w-[1400px] mx-auto">
+
+        <div class="flex flex-wrap justify-between items-center mb-4 px-8 xl:mb-8">
+          <div>
+            <h3 class="text-[#fff] text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+              How AdviseBridge works for advisors
+            </h3>
+            <hr class="w-12 border-t-2 border-[#fff] mb-4">
+          </div>   
+          <button class="openVideoBtn inline-flex items-center w-auto h-12 px-6 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer" data-video="SQUsK1uDigU">
+            Watch Video
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+              <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/>
+            </svg>
+          </button>
+        </div>  
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 px-8 mx-auto w-full">
+
+          <div class="bg-[#e6f0fc] flex flex-col justify-center items-center text-center rounded-xl px-8 lg:px-12 py-8">
+            <h2 class="text-4xl font-bold text-gray-900 tracking-wide relative z-2 mt-8">01</h2>
+            <div class="w-[100px] aspect-[0.925] opacity-50 rotate-5 relative -mt-20">
+              <svg viewBox="0 0 100 92.5" xmlns="http://www.w3.org/2000/svg" class="w-full h-full animate-[float_4s_ease-in-out_infinite]">
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="100%" stop-color="#ffffff00" />
+                  </linearGradient>
+                </defs>
+
+                <path
+                  fill="url(#grad)"
+                  d="M 91.52 26.2
+                    C 101.76 42.67, 103.09 63.87, 93.52 78.28
+                    C 83.95 92.76, 63.47 100.58, 44.11 99.97
+                    C 24.74 99.42, 6.42 90.43, 1.45 78.42
+                    C -3.45 66.41, 4.93 51.38, 14.06 35.46
+                    C 23.18 19.54, 33.13 2.8, 47.59 0.33
+                    C 62.14 -2.14, 81.28 9.66, 91.52 26.2 Z"
+                />
+              </svg>
+            </div>
+
+            <div class="py-2">
+              <h6 class="text-base text-gray-900 font-bold mb-2">Find schools that meet your student's interests</h6>
+              <p class="text-sm text-gray-700 font-light mb-0">Filter by program, major, or even niche interests. Match students with their dream schools and boost their application success</p>
+            </div>
+          </div>
+          
+          <div class="bg-[#fff4e6] flex flex-col justify-center items-center text-center rounded-xl px-8 lg:px-12 py-8">
+            <h2 class="text-4xl font-bold text-gray-900 tracking-wide relative z-2 mt-8">02</h2>
+            <div class="w-[100px] aspect-[0.925] opacity-50 rotate-135 relative -mt-18 ml-2">
+              <svg viewBox="0 0 100 92.5" xmlns="http://www.w3.org/2000/svg" class="w-full h-full animate-[float_4s_ease-in-out_infinite]">
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="100%" stop-color="#ffffff00" />
+                  </linearGradient>
+                </defs>
+
+                <path
+                  fill="url(#grad)"
+                  d="M 91.52 26.2
+                    C 101.76 42.67, 103.09 63.87, 93.52 78.28
+                    C 83.95 92.76, 63.47 100.58, 44.11 99.97
+                    C 24.74 99.42, 6.42 90.43, 1.45 78.42
+                    C -3.45 66.41, 4.93 51.38, 14.06 35.46
+                    C 23.18 19.54, 33.13 2.8, 47.59 0.33
+                    C 62.14 -2.14, 81.28 9.66, 91.52 26.2 Z"
+                />
+              </svg>
+            </div>
+            <div class="py-2">
+              <h6 class="text-base text-gray-900 font-bold mb-2">Apply to multiple programs that match their qualifications</h6>
+              <p class="text-sm text-gray-700 font-light mb-0">Explore a variety of programs that match your student's qualifications. Track deadlines, upload documents, and stay organized – all in one place</p>
+            </div>
+          </div>
+          
+          <div class="bg-[#e6f7ea] flex flex-col justify-center items-center text-center rounded-xl px-8 lg:px-12 py-8">
+            <h2 class="text-4xl font-bold text-gray-900 tracking-wide relative z-2 mt-8">03</h2>
+            <div class="w-[100px] aspect-[0.925] opacity-50 rotate-90 relative -mt-20">
+              <svg viewBox="0 0 100 92.5" xmlns="http://www.w3.org/2000/svg" class="w-full h-full animate-[float_4s_ease-in-out_infinite]">
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="100%" stop-color="#ffffff00" />
+                  </linearGradient>
+                </defs>
+
+                <path
+                  fill="url(#grad)"
+                  d="M 91.52 26.2
+                    C 101.76 42.67, 103.09 63.87, 93.52 78.28
+                    C 83.95 92.76, 63.47 100.58, 44.11 99.97
+                    C 24.74 99.42, 6.42 90.43, 1.45 78.42
+                    C -3.45 66.41, 4.93 51.38, 14.06 35.46
+                    C 23.18 19.54, 33.13 2.8, 47.59 0.33
+                    C 62.14 -2.14, 81.28 9.66, 91.52 26.2 Z"
+                />
+              </svg>
+            </div>
+            <div class="py-2">
+              <h6 class="text-base text-gray-900 font-bold mb-2">Earn competitive commissions by guiding students</h6>
+              <p class="text-sm text-gray-700 font-light mb-0">We recognize your dedication and expertise. That's why we offer up to 80% commission for successful student placements</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- How Advisbridge works for advisors Ends-->
+
+
+
+    <!-- Partner Testimonials Starts -->
+    <section class="bg-blue-50 py-12 lg:py-24">
+      <div class="max-w-[1400px] mx-auto px-8 flex flex-col lg:items-center lg:flex-row gap-8 bg-transparent relative">
+        <div class="w-full lg:w-1/2 relative z-2">
+          <div class="mb-6 xl:mb-16">
+            <h3 class="text-gray-900 text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+              What our Advisors Say?
+            </h3>
+            <hr class="w-12 border-t-2 border-[#0071e3] mb-4">
+            <p class="text-gray-700 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px]">Partners commend AdviseBridge for its efficiency, reliability, and outstanding support</p>
+          </div>
+          <h5 class="text-base font-bold text-gray-900 mb-4">See why our partners trust us</h5>
+          <div class="btn-wrap flex flex-wrap">
+            <a href="partners_testimonial.html" class="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer">
+              View More
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="full lg:w-1/2 relative z-1">
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8 col-span-6">
+                <div class="relative z-10 bg-white/60 backdrop-blur-lg flex flex-col lg:items-center justify-between lg:flex-row gap-4 lg:gap-10 p-5 lg:p-10 pb-6 rounded-xl shadow-lg border border-[#ededed]">
+                    <div class="order-1 lg:order-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475.082 475.081" x="0px" y="0px" width="25px" height="25px" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve" version="1.1">
+                            <g>
+                                <g>
+                                <path d="M 164.45 219.27 h -63.954 c -7.614 0 -14.087 -2.664 -19.417 -7.994 c -5.327 -5.33 -7.994 -11.801 -7.994 -19.417 v -9.132 c 0 -20.177 7.139 -37.401 21.416 -51.678 c 14.276 -14.272 31.503 -21.411 51.678 -21.411 h 18.271 c 4.948 0 9.229 -1.809 12.847 -5.424 c 3.616 -3.617 5.424 -7.898 5.424 -12.847 V 54.819 c 0 -4.948 -1.809 -9.233 -5.424 -12.85 c -3.617 -3.612 -7.898 -5.424 -12.847 -5.424 h -18.271 c -19.797 0 -38.684 3.858 -56.673 11.563 c -17.987 7.71 -33.545 18.132 -46.68 31.267 c -13.134 13.129 -23.553 28.688 -31.262 46.677 C 3.855 144.039 0 162.931 0 182.726 v 200.991 c 0 15.235 5.327 28.171 15.986 38.834 c 10.66 10.657 23.606 15.985 38.832 15.985 h 109.639 c 15.225 0 28.167 -5.328 38.828 -15.985 c 10.657 -10.663 15.987 -23.599 15.987 -38.834 V 274.088 c 0 -15.232 -5.33 -28.168 -15.994 -38.832 C 192.622 224.6 179.675 219.27 164.45 219.27 Z" />
+                                <path d="M 459.103 235.256 c -10.656 -10.656 -23.599 -15.986 -38.828 -15.986 h -63.953 c -7.61 0 -14.089 -2.664 -19.41 -7.994 c -5.332 -5.33 -7.994 -11.801 -7.994 -19.417 v -9.132 c 0 -20.177 7.139 -37.401 21.409 -51.678 c 14.271 -14.272 31.497 -21.411 51.682 -21.411 h 18.267 c 4.949 0 9.233 -1.809 12.848 -5.424 c 3.613 -3.617 5.428 -7.898 5.428 -12.847 V 54.819 c 0 -4.948 -1.814 -9.233 -5.428 -12.85 c -3.614 -3.612 -7.898 -5.424 -12.848 -5.424 h -18.267 c -19.808 0 -38.691 3.858 -56.685 11.563 c -17.984 7.71 -33.537 18.132 -46.672 31.267 c -13.135 13.129 -23.559 28.688 -31.265 46.677 c -7.707 17.987 -11.567 36.879 -11.567 56.674 v 200.991 c 0 15.235 5.332 28.171 15.988 38.834 c 10.657 10.657 23.6 15.985 38.828 15.985 h 109.633 c 15.229 0 28.171 -5.328 38.827 -15.985 c 10.664 -10.663 15.985 -23.599 15.985 -38.834 V 274.088 C 475.082 258.855 469.76 245.92 459.103 235.256 Z" />
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="text-gray-700 text-sm font-light mb-4 lg:mb-6 mt-4">
+                            I am working with AdviseBridge since they started their company. It's a great and easy platform, even their payment policy is very transparent with counselors. Highly recommended the company and am proud to be a member of AdviseBridge.
+                        </p>
+                        <p class="mb-4 lg:mb-6 mt-4">
+                            <span class="text-sm xl:text-base text-gray-900 capitalize font-bold mr-1">Sumit Singh </span> 
+                            <span class="text-xs xl:text-sm text-gray-600 font-light">- First Step, Nepal</span>
+                        </p>
+                    </div>
+                    <div class="relative shrink-0">
+                        <img src="img/partner-1.webp" alt="Image Description" class="rounded-full w-24 h-24 object-cover 2xl:w-28 2xl:h-28" loading="lazy">
+                        <div class="rounded-full w-24 h-24 2xl:w-28 2xl:h-28 bg-gradient-to-r from-black to-blue-500 absolute inset-0 opacity-20"></div>
+                    </div>
+                </div>
+                <div class="relative z-10 bg-white/60 backdrop-blur-lg flex flex-col lg:items-center justify-between lg:flex-row gap-4 lg:gap-10 p-5 lg:p-10 pb-6 rounded-xl shadow-lg border border-[#ededed]">
+                    <div class="order-1 lg:order-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475.082 475.081" x="0px" y="0px" width="25px" height="25px" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve" version="1.1">
+                            <g>
+                                <g>
+                                <path d="M 164.45 219.27 h -63.954 c -7.614 0 -14.087 -2.664 -19.417 -7.994 c -5.327 -5.33 -7.994 -11.801 -7.994 -19.417 v -9.132 c 0 -20.177 7.139 -37.401 21.416 -51.678 c 14.276 -14.272 31.503 -21.411 51.678 -21.411 h 18.271 c 4.948 0 9.229 -1.809 12.847 -5.424 c 3.616 -3.617 5.424 -7.898 5.424 -12.847 V 54.819 c 0 -4.948 -1.809 -9.233 -5.424 -12.85 c -3.617 -3.612 -7.898 -5.424 -12.847 -5.424 h -18.271 c -19.797 0 -38.684 3.858 -56.673 11.563 c -17.987 7.71 -33.545 18.132 -46.68 31.267 c -13.134 13.129 -23.553 28.688 -31.262 46.677 C 3.855 144.039 0 162.931 0 182.726 v 200.991 c 0 15.235 5.327 28.171 15.986 38.834 c 10.66 10.657 23.606 15.985 38.832 15.985 h 109.639 c 15.225 0 28.167 -5.328 38.828 -15.985 c 10.657 -10.663 15.987 -23.599 15.987 -38.834 V 274.088 c 0 -15.232 -5.33 -28.168 -15.994 -38.832 C 192.622 224.6 179.675 219.27 164.45 219.27 Z" />
+                                <path d="M 459.103 235.256 c -10.656 -10.656 -23.599 -15.986 -38.828 -15.986 h -63.953 c -7.61 0 -14.089 -2.664 -19.41 -7.994 c -5.332 -5.33 -7.994 -11.801 -7.994 -19.417 v -9.132 c 0 -20.177 7.139 -37.401 21.409 -51.678 c 14.271 -14.272 31.497 -21.411 51.682 -21.411 h 18.267 c 4.949 0 9.233 -1.809 12.848 -5.424 c 3.613 -3.617 5.428 -7.898 5.428 -12.847 V 54.819 c 0 -4.948 -1.814 -9.233 -5.428 -12.85 c -3.614 -3.612 -7.898 -5.424 -12.848 -5.424 h -18.267 c -19.808 0 -38.691 3.858 -56.685 11.563 c -17.984 7.71 -33.537 18.132 -46.672 31.267 c -13.135 13.129 -23.559 28.688 -31.265 46.677 c -7.707 17.987 -11.567 36.879 -11.567 56.674 v 200.991 c 0 15.235 5.332 28.171 15.988 38.834 c 10.657 10.657 23.6 15.985 38.828 15.985 h 109.633 c 15.229 0 28.171 -5.328 38.827 -15.985 c 10.664 -10.663 15.985 -23.599 15.985 -38.834 V 274.088 C 475.082 258.855 469.76 245.92 459.103 235.256 Z" />
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="text-gray-700 text-sm font-light mb-4 lg:mb-6 mt-4">
+                            I've had the opportunity to work with advisebridge.com, I can state this is one of the strongest platforms for connecting international students to colleges and universities abroad. I look forward to using this platform in connecting students from Vietnam to AdviseBridge partner schools.
+                        </p>
+                        <p class="mb-4 lg:mb-6 mt-4">
+                            <span class="text-sm xl:text-base text-gray-900 capitalize font-bold mr-1">Trung Nguyen </span> 
+                            <span class="text-xs xl:text-sm text-gray-600 font-light">- CaliVisa, Vietnam</span>
+                        </p>
+                    </div>
+                    <div class="relative shrink-0">
+                        <img src="img/partner-2.webp" alt="Image Description" class="rounded-full w-24 h-24 object-cover 2xl:w-28 2xl:h-28" loading="lazy">
+                        <div class="rounded-full w-24 h-24 2xl:w-28 2xl:h-28 bg-gradient-to-r from-black to-blue-500 absolute inset-0 opacity-20"></div>
+                    </div>
+                </div>
+                <div class="hidden xl:block absolute bottom-[-2rem] right-[30rem] w-72 h-72 rounded-full bg-gradient-to-br from-blue-200 to-white"></div>
+            </div>
+        </div>
+      </div>
+    </section>
+    <!-- Partner Testimonials Ends -->
+
+    <!-- Pursue Section Starts -->
+    <section class="bg-gradient-to-br from-[#296be3] to-[#21186b] py-12 lg:py-24 relative overflow-hidden">
+      <div class="max-w-[1400px] mx-auto px-8 flex flex-col lg:items-center lg:flex-row gap-8 bg-transparent relative z-2">
+
+        <div class="full lg:w-1/2 order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000">
+          <div class="mb-6 xl:mb-16">
+            <h3 class="text-white text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+              Pursue Your <span class="text-[#e7a62a]">Abroad Study</span> Journey!
+            </h3>
+            <hr class="w-12 border-t-2 border-white mb-4">
+            <p class="text-gray-300 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px]">Pursue your abroad study journey today with expert guidance, personalized support, & comprehensive resources</p>
+          </div>
+          <div class="btn-wrap flex flex-wrap">
+            <a href="register.html" class="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer">
+              Get Started 
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="full lg:w-1/2 flex lg:justify-center items-center order-1 lg:order-2" data-aos="fade-left" data-aos-duration="1000">
+          <img src="img/pursue.webp" alt="" class="max-w-[200px] lg:max-w-[60%]" loading="lazy">
+        </div>
+
+      </div>
+      <div class="hidden xl:block absolute top-[-20%] right-[-30%] z-1 w-444 h-444 rounded-full bg-gradient-to-br from-[#296be3] to-[#3ccedb] opacity-20"></div>
+    </section>
+    <!-- Pursue Section Ends -->
+
+    <!-- Blog Starts-->
+    <section class="bg-white py-12 lg:py-24">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="px-8 mb-8">
+          <h3 class="text-gray-900 text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
+            Frequently Asked Questions
+          </h3>
+          <hr class="w-12 border-t-2 border-[#0071e3] mb-4">
+          <p class="text-gray-700 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px]">Check out some commonly asked questions by Advisors</p>
+        </div>
+        <div class="bg-transparent flex flex-col lg:flex-row gap-8 px-8">
+          
+          <div class="w-full lg:w-2/3 z-2 order-2 lg:order-1">
+            <!-- FAQ Starts -->
+            <div class="w-full mb-8 space-y-4">
+
+              <div class="border border-gray-200 rounded-xl px-4 py-4 lg:px-8 lg:py-6">
+                <button class="faq-btn w-full flex justify-between items-center text-left cursor-pointer">
+                  <span class="text-sm lg:text-base font-bold text-gray-900 mr-2 lg:mr-8">What is AdviseBridge?</span>
+                  <svg class="w-5 min-w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+
+                <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 text-gray-600">
+                  <p class="text-sm text-gray-700 pt-3">
+                    AdviseBridge is an online platform that connects international students with study abroad programs, primarily at US universities. It uses AI and machine learning for program search and matching, streamlines applications, document management, and visa guidance. It's designed for students, advisors (recruitment counselors), and partner institutions.
+                  </p>
+                </div>
+              </div>
+
+              <div class="border border-gray-200 rounded-xl px-4 py-4 lg:px-8 lg:py-6">
+                <button class="faq-btn w-full flex justify-between items-center text-left cursor-pointer">
+                  <span class="text-sm lg:text-base font-bold text-gray-900 mr-8">Who is AdviseBridge for, especially on the advisor side?</span>
+                  <svg class="w-5 min-w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+
+                <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 text-gray-600">
+                  <p class="text-sm text-gray-700 pt-3">
+                    The platform targets international students seeking education abroad, recruitment advisors/counselors who guide them, and universities. Advisors are independent contractors (e.g., education agents in countries like Nepal, Vietnam) who help match students to programs and earn commissions on successful placements.
+                  </p>
+                </div>
+              </div>
+
+              <div class="border border-gray-200 rounded-xl px-4 py-4 lg:px-8 lg:py-6">
+                <button class="faq-btn w-full flex justify-between items-center text-left cursor-pointer">
+                  <span class="text-sm lg:text-base font-bold text-gray-900 mr-8">Is there a dedicated advisor dashboard or section?</span>
+                  <svg class="w-5 min-w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+
+                <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 text-gray-600">
+                  <p class="text-sm text-gray-700 pt-3">
+                    Yes, advisors get access to tools for filtering programs, managing student applications, tracking deadlines, uploading documents, and exploring partner US institutions (e.g., Wichita State University, Northeastern Illinois University, Troy University).
+                  </p>
+                </div>
+              </div>
+
+              <div class="border border-gray-200 rounded-xl px-4 py-4 lg:px-8 lg:py-6">
+                <button class="faq-btn w-full flex justify-between items-center text-left cursor-pointer">
+                  <span class="text-sm lg:text-base font-bold text-gray-900 mr-8">How do advisors earn money on AdviseBridge?</span>
+                  <svg class="w-5 min-w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+
+                <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 text-gray-600">
+                  <p class="text-sm text-gray-700 pt-3">
+                    Advisors earn competitive commissions (up to 80% per successful student placement) paid by partner institutions. Payments are transparent, with no hidden fees.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+            <!-- FAQ Ends -->
+          </div>
+          <div class="full lg:w-1/3 flex lg:justify-center items-start order-1 lg:order-2 px-4">
+            <img src="img/faq-2.webp" alt="" class="max-w-[200px] lg:max-w-[100%]" loading="lazy">
+          </div>
+
+        </div>
+
+        <div class="px-8 btn-wrap flex flex-wrap">
+          <a href="faq.html" class="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer">
+            More FAQs 
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+    <!-- Blog Ends-->
+
+  </main>
+
+
+  <!-- Footer Starts-->
+  <footer class="bg-gradient-to-br from-[#296be3] to-[#21186b] pt-8 lg:py-16 lg:pb-8">
+    <div class="max-w-[1400px] mb-8 lg:mb-24 px-8 py-4 lg:py-0 mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr]  gap-8 lg:gap-16">
+      <div>
+        <div class="mb-0 mx-auto py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
+          <h2 class="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
+            Subscribe to our Newsletter!
+          </h2>
+          <hr class="w-12 border-t-2 border-[#fff] mb-4">
+          <!-- <p class="text-gray-300 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px] text-center">Receive the latest news and exclusive offers to search colleges</p> -->
+        </div>
+        <form>
+          <div class="w-full flex flex-col md:flex-row gap-2">
+            <div class="w-full lg:max-w-[500px] relative">
+              <input type="email" placeholder="Your Email Address..." class="text-gray-800 placeholder-gray-500 w-full bg-white border border-gray-300 rounded p-3 pl-11 pr-11 outline-none">
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-open-icon lucide-mail-open stroke-gray-500 stroke-[1.5] w-6 h-6"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <a class="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">Subscribe</a>
+            </div>   
+          </div>
+        </form>
+      </div>
+      <div>
+        <div class="mb-0 mx-auto py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
+          <h2 class="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
+            Get Connected
+          </h2>
+          <hr class="w-12 border-t-2 border-[#fff] mb-4">
+          <!-- <p class="text-gray-300 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px] text-center">Receive the latest news and exclusive offers to search colleges</p> -->
+        </div>
+        <ul class="flex space-x-3 mt-0 [&>li]:before:top-[0]">
+          <li>
+            <a href="https://www.facebook.com/AdviseBridge/" target="_blank" class="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+              <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.18848 10.125L9.6884 6.86742H6.56266V4.75348C6.56266 3.86227 6.9993 2.99355 8.39922 2.99355H9.82023V0.220078C9.82023 0.220078 8.5307 0 7.29777 0C4.72363 0 3.04105 1.56023 3.04105 4.38469V6.86742H0.179688V10.125H3.04105V18H6.56266V10.125H9.18848Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/AdviseBridge" target="_blank" class="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+              <!-- <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.1498 4.33383C16.1612 4.49372 16.1612 4.65364 16.1612 4.81354C16.1612 9.69043 12.4493 15.3098 5.66499 15.3098C3.57488 15.3098 1.63326 14.7044 0 13.6537C0.296966 13.6879 0.582471 13.6993 0.890863 13.6993C2.61546 13.6993 4.20305 13.1169 5.47083 12.1232C3.84899 12.0889 2.48985 11.0268 2.02156 9.56482C2.25001 9.59906 2.47842 9.62191 2.71829 9.62191C3.0495 9.62191 3.38074 9.57621 3.6891 9.4963C1.99875 9.15363 0.730936 7.66887 0.730936 5.87572V5.83005C1.22204 6.10416 1.79315 6.27548 2.39844 6.2983C1.40478 5.63584 0.753788 4.50514 0.753788 3.22594C0.753788 2.54068 0.936496 1.9125 1.25631 1.36427C3.07232 3.60286 5.80203 5.06476 8.86293 5.22469C8.80583 4.95058 8.77155 4.66507 8.77155 4.37953C8.77155 2.34651 10.4162 0.69043 12.4607 0.69043C13.5228 0.69043 14.4822 1.13586 15.1561 1.85541C15.9898 1.69552 16.7893 1.38712 17.4975 0.964544C17.2233 1.82116 16.6409 2.54071 15.8756 2.99753C16.618 2.91762 17.3376 2.71199 18 2.42649C17.4975 3.15742 16.8693 3.80841 16.1498 4.33383Z"/>
+              </svg> -->
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.7,7.3l5.9-6.9h-1.8L9.9,6.1L5.8,0.3H0.1l6.7,9.5L0,17.7h1.8L7.5,11l4.7,6.7H18L10.7,7.3z M2.8,1.8H5
+                  l10.2,14.4H13L2.8,1.8z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/advisebridge/" target="_blank" class="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.02911 17.9996H0.297321V5.98219H4.02911V17.9996ZM2.16121 4.3429C0.967902 4.3429 0 3.35451 0 2.16121C8.54116e-09 1.58802 0.227698 1.03831 0.633002 0.633002C1.03831 0.227698 1.58802 0 2.16121 0C2.73439 0 3.2841 0.227698 3.68941 0.633002C4.09471 1.03831 4.32241 1.58802 4.32241 2.16121C4.32241 3.35451 3.35411 4.3429 2.16121 4.3429ZM17.996 17.9996H14.2722V12.1496C14.2722 10.7554 14.2441 8.96746 12.332 8.96746C10.3918 8.96746 10.0945 10.4822 10.0945 12.0492V17.9996H6.3667V5.98219H9.9458V7.62147H9.99804C10.4962 6.67728 11.7133 5.68085 13.5289 5.68085C17.3057 5.68085 18 8.1679 18 11.3983V17.9996H17.996Z"/>
+              </svg>
+
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/advisebridges/" target="_blank" class="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.00201 4.386C6.44808 4.386 4.38806 6.44601 4.38806 8.99995C4.38806 11.5539 6.44808 13.6139 9.00201 13.6139C11.5559 13.6139 13.616 11.5539 13.616 8.99995C13.616 6.44601 11.5559 4.386 9.00201 4.386ZM9.00201 11.9996C7.35159 11.9996 6.00234 10.6544 6.00234 8.99995C6.00234 7.34551 7.34757 6.00028 9.00201 6.00028C10.6564 6.00028 12.0017 7.34551 12.0017 8.99995C12.0017 10.6544 10.6524 11.9996 9.00201 11.9996ZM14.8809 4.19727C14.8809 4.7956 14.399 5.27345 13.8047 5.27345C13.2064 5.27345 12.7285 4.79158 12.7285 4.19727C12.7285 3.60296 13.2104 3.12108 13.8047 3.12108C14.399 3.12108 14.8809 3.60296 14.8809 4.19727ZM17.9368 5.28952C17.8685 3.84791 17.5392 2.57094 16.4831 1.51885C15.431 0.466761 14.154 0.13748 12.7124 0.0651991C11.2267 -0.0191289 6.77334 -0.0191289 5.28756 0.0651991C3.84997 0.133465 2.57301 0.462745 1.5169 1.51484C0.460792 2.56693 0.135527 3.84389 0.063246 5.2855C-0.021082 6.77128 -0.021082 11.2246 0.063246 12.7104C0.131511 14.152 0.460792 15.4289 1.5169 16.481C2.57301 17.5331 3.84596 17.8624 5.28756 17.9347C6.77334 18.019 11.2267 18.019 12.7124 17.9347C14.154 17.8664 15.431 17.5371 16.4831 16.481C17.5352 15.4289 17.8645 14.152 17.9368 12.7104C18.0211 11.2246 18.0211 6.77529 17.9368 5.28952ZM16.0173 14.3046C15.7041 15.0916 15.0977 15.698 14.3066 16.0152C13.122 16.4851 10.3111 16.3766 9.00201 16.3766C7.69292 16.3766 4.87797 16.481 3.69738 16.0152C2.91032 15.702 2.30396 15.0957 1.98673 14.3046C1.5169 13.12 1.62532 10.309 1.62532 8.99995C1.62532 7.69085 1.52091 4.87591 1.98673 3.69532C2.29994 2.90826 2.9063 2.3019 3.69738 1.98466C4.88199 1.51484 7.69292 1.62326 9.00201 1.62326C10.3111 1.62326 13.126 1.51885 14.3066 1.98466C15.0937 2.29788 15.7001 2.90424 16.0173 3.69532C16.4871 4.87992 16.3787 7.69085 16.3787 8.99995C16.3787 10.309 16.4871 13.124 16.0173 14.3046Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@AdviseBridge" target="_blank" class="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+              <svg width="18" height="18" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M49.5,15c0,0-0.5-3.4-2-5c-1.9-2-4-2-5-2.1C35.5,7.4,25,7.4,25,7.4h0c0,0-10.5,0-17.5,0.5c-1,0.1-3.1,0.1-5,2.1
+                c-1.5,1.5-2,5-2,5S0,19,0,23.1v3.8c0,4,0.5,8.1,0.5,8.1s0.5,3.4,2,5c1.9,2,4.4,1.9,5.5,2.1c4,0.4,17,0.5,17,0.5s10.5,0,17.5-0.5
+                c1-0.1,3.1-0.1,5-2.1c1.5-1.5,2-5,2-5s0.5-4,0.5-8.1v-3.8C50,19.1,49.5,15,49.5,15L49.5,15L49.5,15L49.5,15z M19.8,31.5V17.4l13.5,7
+                L19.8,31.5z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] px-8 mx-auto relative">
+      <div class="flex flex-wrap xl:justify-between gap-y-4 text-sm text-mywhitelighttext">
+
+        <div class="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+          <h5 class="text-base font-bold text-white mb-6">Company</h5>
+          <ul class="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+            <li><a href="about.html">About</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="achievement.html">Achievement</a></li>
+          </ul>
+        </div>
+
+        <div class="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+          <h5 class="text-base font-bold text-white mb-6">Services</h5>
+          <ul class="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+            <li><a href="students.html">Students</a></li>
+            <li><a href="advisors.html">Advisors</a></li>
+            <li><a href="institutions.html">Institutions</a></li>
+            <li><a href="explore.html">Explore</a></li>
+          </ul>
+        </div>
+
+        <div class="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+          <h5 class="text-base font-bold text-white mb-6">Legal</h5>
+          <ul class="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+            <li><a href="terms_conditions.html">Terms &amp; conditions</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+            <li><a href="privacy_policy.html">Privacy policy</a></li>
+            <li><a href="refund_policy.html">Refund policy</a></li>
+            <li><a href="cost_policy.html">Cost policy</a></li>
+          </ul>
+        </div>
+
+        <div class="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+          <h5 class="text-base font-bold text-white mb-6">Resources</h5>
+          <ul class="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="faqs.html">FAQs</a></li>
+            <li><a href="eligibility_criteria.html">Eligibility Criteria</a></li>
+          </ul>
+        </div>
+
+        <div class="w-full md:w-1/3 xl:w-1/5 mb-4">
+          <img src="img/logo/logo_white.svg" alt="Advise Bridge Logo" class="w-48 h-auto mb-4" loading="lazy">
+          <p class="text-gray-300 text-sm font-light mb-3 lg:mb-6">AdviseBridge connects students & institutions globally.</p>
+          <div class="flex flex-wrap gap-4">
+            <a href="https://www.icef.com/agency-accreditation-agencies-only/" class="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
+              <img src="img/achievement-1.webp" alt="Image Description" class="w-[60%]" loading="lazy">
+            </a>
+            <a href="https://isana.org.au/" class="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
+              <img src="img/achievement-2.webp" alt="Image Description" class="w-[70%]" loading="lazy">
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 lg:mt-12 border-t border-white/7 pt-2 lg:pt-12">
+      <div class="max-w-[1400px] px-8 py-4 lg:py-0 mx-auto">
+        <p class="text-gray-300 text-sm font-light mb-2 lg:mb-4">AdviseBridge © 2025. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Footer Starts-->
+  
+  <!-- Video Popup Starts -->
+  <div id="videoPopup" class="fixed z-50 inset-0 bg-gradient-to-br from-gray-800/90 to-gray-950 hidden flex items-center justify-center p-4">
+    <div class="relative w-full max-w-3xl bg-black rounded-lg overflow-hidden">
+      <!-- Close button -->
+      <button id="closeVideo" class="flex justify-center items-center w-8 h-8 text-white absolute right-2 top-2 z-20 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hover:text-red-500 transition-colors duration-200">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="m15 9-6 6"/>
+          <path d="m9 9 6 6"/>
+        </svg>
+      </button>
+      <!-- YouTube iframe -->
+      <iframe id="ytFrame" class="w-full aspect-video" allow="autoplay" allowfullscreen></iframe>
+    </div>
+  </div>
+  <!-- Video Popup Ends -->
+
+  <!-- Scroll Top Custom Starts-->
+  <button id="scrollToTopBtn" class="hidden bg-gradient-to-br from-[#026d44] to-[#005c36] hover:from-[#029c75] hover:to-[#004327] text-white px-3 py-3 rounded-full transition-all duration-300 drop-shadow-[0_8px_8px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_8px_8px_rgba(0,0,0,0.7)] fixed bottom-4 right-4 z-10 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+  </button>
+  <!-- Scroll Top Custom Ends-->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- <script src="js/aos.js"></script> -->
+  <script src="js/all.js"></script>
+</body>
+</html>
