@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CircleX, ArrowRight, Play, ChevronDown, Mail, Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Student() {
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -209,6 +211,19 @@ function Student() {
         };
     }, [mobileNavOpen, showVideoPopup]);
 
+    // Initialize AOS only once
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out',
+        });
+
+        // Refresh AOS on route changes
+        AOS.refresh();
+    }, []);
+
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -318,9 +333,12 @@ function Student() {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center min-w-[220px] relative">
                                 <a href="/">
-                                    <div className="h-8 lg:h-12 flex items-center">
-                                        <span className="font-bold text-[#296be3] text-xl lg:text-2xl">AdviseBridge</span>
-                                    </div>
+                                    <img
+                                        src="img/logo_blue.svg"
+                                        alt="AdviseBridge"
+                                        className="h-8 lg:h-12 w-auto"
+                                        loading="lazy"
+                                    />
                                 </a>
                             </div>
 
@@ -375,24 +393,62 @@ function Student() {
             </div>
 
             <main className="flex flex-col flex-1 w-full overflow-hidden">
-                {/* Hero Section */}
+                {/* Hero Section with AOS Animations */}
                 <section className="bg-white pt-12 pb-6 lg:pt-24 lg:pb-20">
                     <div className="max-w-[1400px] mx-auto px-8 flex flex-col lg:items-center lg:flex-row bg-transparent relative">
-                        <div className="full lg:w-1/3 mb-8 lg:mb-0 flex lg:justify-center items-center relative z-10">
-                            <img src="img/student.webp" alt="" className="max-w-[200px] lg:max-w-[60%]" loading="lazy" />
+
+                        {/* Left side with image - Fade from right animation */}
+                        <div
+                            data-aos="fade-right"
+                            data-aos-duration="1000"
+                            className="full lg:w-1/3 mb-8 lg:mb-0 flex lg:justify-center items-center relative z-10"
+                        >
+                            <img
+                                src="img/student.webp"
+                                alt=""
+                                className="max-w-[200px] lg:max-w-[60%]"
+                                loading="lazy"
+                            />
                         </div>
 
-                        <div className="w-full lg:w-2/3 relative z-20">
+                        {/* Right side with content - Fade from left animation */}
+                        <div
+                            data-aos="fade-left"
+                            data-aos-duration="1000"
+                            className="w-full lg:w-2/3 relative z-20"
+                        >
                             <div className="mb-6 max-w-[750px]">
                                 <h3 className="text-gray-900 text-2xl md:text-3xl lg:text-5xl font-bold leading-[1.2] mb-2">
                                     Connecting to Top Universities
                                 </h3>
                                 <hr className="w-12 border-t-2 border-[#0071e3] mb-4" />
-                                <p className="text-gray-700 text-sm lg:text-base lg:max-w-[800px] mb-8">Find programs and top-ranking institutions that match your background, skills, and interests</p>
+                                <p className="text-gray-700 text-sm lg:text-base lg:max-w-[800px] mb-8">
+                                    Find programs and top-ranking institutions that match your background, skills, and interests
+                                </p>
                                 <div className="btn-wrap flex flex-wrap">
-                                    <a href="/explore" className="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer">
+                                    <a
+                                        // href="/explore"
+                                        // data-aos="fade-up"
+                                        // data-aos-delay="300"
+                                        // data-aos-duration="800"
+                                        className="inline-flex items-center w-auto h-12 px-8 font-medium bg-[#3c65e3] hover:bg-[#264ec9] text-white rounded hover:text-gray-50 focus:outline-none ring-offset-0 cursor-pointer transition-colors duration-200"
+                                    >
                                         Get Started
-                                        <ArrowRight className="ml-2 w-5 h-5" />
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="ml-2"
+                                        >
+                                            <path d="M5 12h14" />
+                                            <path d="m12 5 7 7-7 7" />
+                                        </svg>
                                     </a>
                                 </div>
                             </div>
@@ -717,24 +773,25 @@ function Student() {
 
             {/* Footer */}
             <footer className="bg-gradient-to-br from-[#296be3] to-[#21186b] pt-8 lg:py-16 lg:pb-8">
-                <div className="max-w-[1400px] mb-8 lg:mb-24 px-8 py-4 lg:py-0 mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16">
+                <div className="max-w-[1400px] mb-8 lg:mb-24 px-8 py-4 lg:py-0 mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr]  gap-8 lg:gap-16">
                     <div>
                         <div className="mb-0 mx-auto py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
                             <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
                                 Subscribe to our Newsletter!
                             </h2>
                             <hr className="w-12 border-t-2 border-[#fff] mb-4" />
+
                         </div>
-                        <form onSubmit={(e) => e.preventDefault()}>
+                        <form>
                             <div className="w-full flex flex-col md:flex-row gap-2">
                                 <div className="w-full lg:max-w-[500px] relative">
                                     <input type="email" placeholder="Your Email Address..." className="text-gray-800 placeholder-gray-500 w-full bg-white border border-gray-300 rounded p-3 pl-11 pr-11 outline-none" />
                                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer">
-                                        <Mail className="stroke-gray-500 stroke-[1.5] w-6 h-6" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-mail-open-icon lucide-mail-open stroke-gray-500 stroke-[1.5] w-6 h-6"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z" /><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10" /></svg>
                                     </div>
                                 </div>
                                 <div className="btn-wrap">
-                                    <button className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-white rounded hover:bg-[#2b54d2] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">Subscribe</button>
+                                    <a className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">Subscribe</a>
                                 </div>
                             </div>
                         </form>
@@ -745,59 +802,116 @@ function Student() {
                                 Get Connected
                             </h2>
                             <hr className="w-12 border-t-2 border-[#fff] mb-4" />
+
                         </div>
-                        <ul className="flex space-x-3 mt-0">
-                            {socialLinks.map((social, index) => {
-                                const Icon = social.icon;
-                                return (
-                                    <li key={index}>
-                                        <a href={social.href} target="_blank" rel="noopener noreferrer" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white">
-                                            <Icon className="w-5 h-5 text-white/80 hover:text-[#121727]" />
-                                        </a>
-                                    </li>
-                                );
-                            })}
+                        <ul className="flex space-x-3 mt-0 [&>li]:before:top-[0]">
+                            <li>
+                                <a href="https://www.facebook.com/AdviseBridge/" target="_blank" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+                                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.18848 10.125L9.6884 6.86742H6.56266V4.75348C6.56266 3.86227 6.9993 2.99355 8.39922 2.99355H9.82023V0.220078C9.82023 0.220078 8.5307 0 7.29777 0C4.72363 0 3.04105 1.56023 3.04105 4.38469V6.86742H0.179688V10.125H3.04105V18H6.56266V10.125H9.18848Z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://x.com/AdviseBridge" target="_blank" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+                                    {/* Twitter/X Bird Logo */}
+                                    <svg width="20" height="20" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/company/advisebridge/" target="_blank" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.02911 17.9996H0.297321V5.98219H4.02911V17.9996ZM2.16121 4.3429C0.967902 4.3429 0 3.35451 0 2.16121C8.54116e-09 1.58802 0.227698 1.03831 0.633002 0.633002C1.03831 0.227698 1.58802 0 2.16121 0C2.73439 0 3.2841 0.227698 3.68941 0.633002C4.09471 1.03831 4.32241 1.58802 4.32241 2.16121C4.32241 3.35451 3.35411 4.3429 2.16121 4.3429ZM17.996 17.9996H14.2722V12.1496C14.2722 10.7554 14.2441 8.96746 12.332 8.96746C10.3918 8.96746 10.0945 10.4822 10.0945 12.0492V17.9996H6.3667V5.98219H9.9458V7.62147H9.99804C10.4962 6.67728 11.7133 5.68085 13.5289 5.68085C17.3057 5.68085 18 8.1679 18 11.3983V17.9996H17.996Z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/advisebridges/" target="_blank" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.00201 4.386C6.44808 4.386 4.38806 6.44601 4.38806 8.99995C4.38806 11.5539 6.44808 13.6139 9.00201 13.6139C11.5559 13.6139 13.616 11.5539 13.616 8.99995C13.616 6.44601 11.5559 4.386 9.00201 4.386ZM9.00201 11.9996C7.35159 11.9996 6.00234 10.6544 6.00234 8.99995C6.00234 7.34551 7.34757 6.00028 9.00201 6.00028C10.6564 6.00028 12.0017 7.34551 12.0017 8.99995C12.0017 10.6544 10.6524 11.9996 9.00201 11.9996ZM14.8809 4.19727C14.8809 4.7956 14.399 5.27345 13.8047 5.27345C13.2064 5.27345 12.7285 4.79158 12.7285 4.19727C12.7285 3.60296 13.2104 3.12108 13.8047 3.12108C14.399 3.12108 14.8809 3.60296 14.8809 4.19727ZM17.9368 5.28952C17.8685 3.84791 17.5392 2.57094 16.4831 1.51885C15.431 0.466761 14.154 0.13748 12.7124 0.0651991C11.2267 -0.0191289 6.77334 -0.0191289 5.28756 0.0651991C3.84997 0.133465 2.57301 0.462745 1.5169 1.51484C0.460792 2.56693 0.135527 3.84389 0.063246 5.2855C-0.021082 6.77128 -0.021082 11.2246 0.063246 12.7104C0.131511 14.152 0.460792 15.4289 1.5169 16.481C2.57301 17.5331 3.84596 17.8624 5.28756 17.9347C6.77334 18.019 11.2267 18.019 12.7124 17.9347C14.154 17.8664 15.431 17.5371 16.4831 16.481C17.5352 15.4289 17.8645 14.152 17.9368 12.7104C18.0211 11.2246 18.0211 6.77529 17.9368 5.28952ZM16.0173 14.3046C15.7041 15.0916 15.0977 15.698 14.3066 16.0152C13.122 16.4851 10.3111 16.3766 9.00201 16.3766C7.69292 16.3766 4.87797 16.481 3.69738 16.0152C2.91032 15.702 2.30396 15.0957 1.98673 14.3046C1.5169 13.12 1.62532 10.309 1.62532 8.99995C1.62532 7.69085 1.52091 4.87591 1.98673 3.69532C2.29994 2.90826 2.9063 2.3019 3.69738 1.98466C4.88199 1.51484 7.69292 1.62326 9.00201 1.62326C10.3111 1.62326 13.126 1.51885 14.3066 1.98466C15.0937 2.29788 15.7001 2.90424 16.0173 3.69532C16.4871 4.87992 16.3787 7.69085 16.3787 8.99995C16.3787 10.309 16.4871 13.124 16.0173 14.3046Z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/@AdviseBridge" target="_blank" className="border border-gray-400 rounded w-10 h-10 flex items-center justify-center hover:bg-white hover:text-white hover:border-white [&>svg>path]:fill-white/80 hover:[&>svg>path]:fill-[#121727]">
+                                    <svg width="18" height="18" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M49.5,15c0,0-0.5-3.4-2-5c-1.9-2-4-2-5-2.1C35.5,7.4,25,7.4,25,7.4h0c0,0-10.5,0-17.5,0.5c-1,0.1-3.1,0.1-5,2.1
+                c-1.5,1.5-2,5-2,5S0,19,0,23.1v3.8c0,4,0.5,8.1,0.5,8.1s0.5,3.4,2,5c1.9,2,4.4,1.9,5.5,2.1c4,0.4,17,0.5,17,0.5s10.5,0,17.5-0.5
+                c1-0.1,3.1-0.1,5-2.1c1.5-1.5,2-5,2-5s0.5-4,0.5-8.1v-3.8C50,19.1,49.5,15,49.5,15L49.5,15L49.5,15L49.5,15z M19.8,31.5V17.4l13.5,7
+                L19.8,31.5z"/>
+                                    </svg>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="max-w-[1400px] px-8 mx-auto relative">
-                    <div className="flex flex-wrap xl:justify-between gap-y-4 text-sm">
-                        {Object.entries(footerLinks).map(([category, links]) => (
-                            <div key={category} className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
-                                <h5 className="text-base font-bold text-white mb-6 capitalize">{category}</h5>
-                                <ul className="[&>li]:mb-2 mb-2">
-                                    {links.map((link) => (
-                                        <li key={link.name}>
-                                            <a href={link.href} className="text-gray-300 text-xs lg:text-sm font-light hover:text-white transition-colors">{link.name}</a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                    <div className="flex flex-wrap xl:justify-between gap-y-4 text-sm text-mywhitelighttext">
+
+                        <div className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+                            <h5 className="text-base font-bold text-white mb-6">Company</h5>
+                            <ul className="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="career.html">Career</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="achievement.html">Achievement</a></li>
+                            </ul>
+                        </div>
+
+                        <div className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+                            <h5 className="text-base font-bold text-white mb-6">Services</h5>
+                            <ul className="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+                                <li><a href="students.html">Students</a></li>
+                                <li><a href="advisors.html">Advisors</a></li>
+                                <li><a href="institutions.html">Institutions</a></li>
+                                <li><a href="explore.html">Explore</a></li>
+                            </ul>
+                        </div>
+
+                        <div className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+                            <h5 className="text-base font-bold text-white mb-6">Legal</h5>
+                            <ul className="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+                                <li><a href="terms_conditions.html">Terms & conditions</a></li>
+                                <li><a href="disclaimer.html">Disclaimer</a></li>
+                                <li><a href="privacy_policy.html">Privacy policy</a></li>
+                                <li><a href="refund_policy.html">Refund policy</a></li>
+                                <li><a href="cost_policy.html">Cost policy</a></li>
+                            </ul>
+                        </div>
+
+                        <div className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
+                            <h5 className="text-base font-bold text-white mb-6">Resources</h5>
+                            <ul className="[&>li]:mb-2 mb-2 [&>li>a]:text-gray-300 [&>li>a]:text-xs lg:[&>li>a]:text-sm [&>li>a]:font-light [&>li:hover>a]:text-white">
+                                <li><a href="blogs.html">Blogs</a></li>
+                                <li><a href="faqs.html">Faqs</a></li>
+                                <li><a href="eligibility_criteria.html">Eligibility Criteria</a></li>
+                            </ul>
+                        </div>
 
                         <div className="w-full md:w-1/3 xl:w-1/5 mb-4">
-                            <div className="h-12 flex items-center mb-4">
-                                <span className="font-bold text-white text-xl lg:text-2xl">AdviseBridge</span>
-                            </div>
+                            <img src="img/logo/logo_white.svg" alt="Advise Bridge Logo" className="w-48 h-auto mb-4" loading="lazy" />
                             <p className="text-gray-300 text-sm font-light mb-3 lg:mb-6">AdviseBridge connects students & institutions globally.</p>
                             <div className="flex flex-wrap gap-4">
-                                <a href="https://www.icef.com/agency-accreditation-agencies-only/" target="_blank" rel="noopener noreferrer" className="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
-                                    <img src="img/achievement-1.webp" alt="ICEF Accreditation" className="w-[60%]" loading="lazy" />
+                                <a href="https://www.icef.com/agency-accreditation-agencies-only/" className="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
+                                    <img src="img/achievement-1.webp" alt="Image Description" className="w-[60%]" loading="lazy" />
                                 </a>
-                                <a href="https://isana.org.au/" target="_blank" rel="noopener noreferrer" className="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
-                                    <img src="img/achievement-2.webp" alt="ISANA Membership" className="w-[70%]" loading="lazy" />
+                                <a href="https://isana.org.au/" className="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer">
+                                    <img src="img/achievement-2.webp" alt="Image Description" className="w-[70%]" loading="lazy" />
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="mt-6 lg:mt-12 border-t border-white/10 pt-2 lg:pt-12">
+                <div className="mt-6 lg:mt-12 border-t border-white/7 pt-2 lg:pt-12">
                     <div className="max-w-[1400px] px-8 py-4 lg:py-0 mx-auto">
                         <p className="text-gray-300 text-sm font-light mb-2 lg:mb-4">AdviseBridge © 2025. All rights reserved.</p>
                     </div>
                 </div>
             </footer>
+
 
             {/* Video Popup */}
             {showVideoPopup && (
@@ -810,7 +924,7 @@ function Student() {
                             <CircleX className="w-6 h-6 hover:text-red-500 transition-colors duration-200" />
                         </button>
                         <iframe
-                            src={`https://www.youtube.com/embed/${videoId}`}
+                            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                             className="w-full aspect-video"
                             title="YouTube video player"
                             frameBorder="0"
