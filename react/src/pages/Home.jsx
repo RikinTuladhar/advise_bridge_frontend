@@ -1,17 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
 import {
-  ArrowRight, MailOpen, Calendar, CircleX, GraduationCap, Book,
-  XCircle, ArrowUp, Menu, X, ChevronDown
-} from 'lucide-react';
-import axios from 'axios';
+  ArrowRight,
+  ArrowUp,
+  Book,
+  Calendar,
+  ChevronDown,
+  CircleX,
+  GraduationCap,
+  MailOpen,
+  XCircle,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState({ lang: 'English', flag: 'us' });
+  const [selectedLanguage, setSelectedLanguage] = useState({ lang: "English", flag: "us" });
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [educationSearch, setEducationSearch] = useState('');
-  const [courseSearch, setCourseSearch] = useState('');
+  const [educationSearch, setEducationSearch] = useState("");
+  const [courseSearch, setCourseSearch] = useState("");
   const [showEducationList, setShowEducationList] = useState(false);
   const [showCourseList, setShowCourseList] = useState(false);
 
@@ -30,11 +37,11 @@ function Home() {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const languages = [
-    { lang: 'English', flag: 'us' },
-    { lang: 'Korean', flag: 'kr' },
-    { lang: 'Spanish', flag: 'es' },
-    { lang: 'Vietnamese', flag: 'vn' },
-    { lang: 'French', flag: 'fr' }
+    { lang: "English", flag: "us" },
+    { lang: "Korean", flag: "kr" },
+    { lang: "Spanish", flag: "es" },
+    { lang: "Vietnamese", flag: "vn" },
+    { lang: "French", flag: "fr" },
   ];
 
   // Fetch data from API
@@ -42,81 +49,41 @@ function Home() {
     const fetchFilters = async () => {
       try {
         setLoading(true);
-        console.log('Fetching API from: https://advisebridge.com/api/v1/search/filters');
 
-        const response = await axios.get('https://advisebridge.com/api/v1/search/filters');
-
-        // Debug log
-        console.log('=== API RESPONSE DEBUG ===');
-        console.log('Status:', response.status);
-        console.log('Full response:', response);
-        console.log('Response data:', response.data.educationLevels);
-        console.log('Response keys:', Object.keys(response.data));
-        console.log('Response.data.data:', response.data?.data);
-        console.log('==========================');
-
+        const response = await axios.get("https://advisebridge.com/api/v1/search/filters");
         // Handle different possible API structures
         if (response.data) {
-          // Try nested structure first
-          if (response.data.data) {
-            console.log(response.data);
-            const { educationLevels, courses } = response.data.data;
-            console.log('Using nested structure');
-            console.log('Education levels found:', educationLevels?.length);
-            console.log('Courses found:', courses?.length);
-            setEducationLevels(educationLevels || []);
-            setCourses(courses || []);
-          }
-          // Try direct structure
-          else if (response.data.educationLevels || response.data.courses) {
-            console.log('Using direct structure');
-            setEducationLevels(response.data.educationLevels || []);
-            setCourses(response.data.courses || []);
-          }
-          // Try alternative property names
-          else {
-            console.log('Checking for alternative property names');
-            const data = response.data;
-            setEducationLevels(
-              data.education_levels ||
-              data.educations ||
-              data.levels ||
-              []
-            );
-            setCourses(
-              data.programs ||
-              data.majors ||
-              data.subjects ||
-              []
-            );
-          }
+          console.log(response.data);
+          const { educationLevels, majors } = response.data;
+          console.log(educationLevels, majors);
+          setEducationLevels(educationLevels || []);
+          setCourses(majors || []);
         }
-
         setLoading(false);
       } catch (err) {
-        setError('Failed to load filter data: ' + err.message);
+        setError("Failed to load filter data: " + err.message);
         setLoading(false);
-        console.error('Error fetching filters:', err);
+        console.error("Error fetching filters:", err);
 
         // Fallback to sample data if API fails
         setEducationLevels([
-          'High School',
-          'Associate Degree',
-          'Bachelor\'s Degree',
-          'Master\'s Degree',
-          'Doctoral Degree',
-          'Certificate Program'
+          "High School",
+          "Associate Degree",
+          "Bachelor's Degree",
+          "Master's Degree",
+          "Doctoral Degree",
+          "Certificate Program",
         ]);
 
         setCourses([
-          'Business Administration',
-          'Computer Science',
-          'Engineering',
-          'Medicine',
-          'Law',
-          'Arts & Humanities',
-          'Sciences',
-          'Social Sciences'
+          "Business Administration",
+          "Computer Science",
+          "Engineering",
+          "Medicine",
+          "Law",
+          "Arts & Humanities",
+          "Sciences",
+          "Social Sciences",
         ]);
       }
     };
@@ -137,8 +104,8 @@ function Home() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Scroll to top functionality
@@ -147,12 +114,12 @@ function Home() {
       setShowScrollTop(window.scrollY > 300);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLanguageSelect = (lang, flag) => {
@@ -171,17 +138,17 @@ function Home() {
   };
 
   const clearEducationSearch = () => {
-    setEducationSearch('');
+    setEducationSearch("");
   };
 
   const clearCourseSearch = () => {
-    setCourseSearch('');
+    setCourseSearch("");
   };
 
   // Helper function to extract display text from API data
   const getDisplayText = (item) => {
     // Check if API returns objects or strings
-    if (typeof item === 'object') {
+    if (typeof item === "object") {
       // Adjust property names based on actual API response structure
       return item.name || item.title || item.label || JSON.stringify(item);
     }
@@ -189,22 +156,22 @@ function Home() {
   };
 
   // Filter education levels based on search
-  const filteredEducationLevels = educationLevels.filter(item => {
+  const filteredEducationLevels = educationLevels.filter((item) => {
     const displayText = getDisplayText(item).toLowerCase();
     return displayText.includes(educationSearch.toLowerCase());
   });
 
   // Filter courses based on search
-  const filteredCourses = courses.filter(item => {
+  const filteredCourses = courses.filter((item) => {
     const displayText = getDisplayText(item).toLowerCase();
     return displayText.includes(courseSearch.toLowerCase());
   });
 
   // Marquee animation effect
   useEffect(() => {
-    const marquee = document.getElementById('marquee');
+    const marquee = document.getElementById("marquee");
     if (marquee) {
-      const container = document.getElementById('marquee-container');
+      const container = document.getElementById("marquee-container");
       const clone = marquee.cloneNode(true);
       container.appendChild(clone);
 
@@ -254,8 +221,9 @@ function Home() {
 
               <div
                 id="lang-menu"
-                className={`${isLangMenuOpen ? 'block' : 'hidden'
-                  } absolute z-50 right-0 mt-0 w-40 bg-white rounded-lg text-gray-700 shadow-2xl overflow-hidden`}
+                className={`${
+                  isLangMenuOpen ? "block" : "hidden"
+                } absolute z-50 right-0 mt-0 w-40 bg-white rounded-lg text-gray-700 shadow-2xl overflow-hidden`}
               >
                 <ul>
                   {languages.map(({ lang, flag }) => (
@@ -284,18 +252,14 @@ function Home() {
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-[220px] relative">
                 <a href="/">
-                  <img
-                    src="img/logo_blue.svg"
-                    alt="AdviseBridge"
-                    className="h-8 lg:h-12 w-auto"
-                    loading="lazy"
-                  />
+                  <img src="img/logo_blue.svg" alt="AdviseBridge" className="h-8 lg:h-12 w-auto" loading="lazy" />
                 </a>
               </div>
               <nav
                 id="mobile-nav"
-                className={`${isMenuOpen ? 'flex' : 'hidden'
-                  } lg:flex min-h-screen lg:min-h-auto w-full justify-center lg:justify-end items-center fixed left-0 right-0 top-0 bottom-0 z-50 lg:relative bg-[#1a1e6b] lg:bg-transparent`}
+                className={`${
+                  isMenuOpen ? "flex" : "hidden"
+                } lg:flex min-h-screen lg:min-h-auto w-full justify-center lg:justify-end items-center fixed left-0 right-0 top-0 bottom-0 z-50 lg:relative bg-[#1a1e6b] lg:bg-transparent`}
               >
                 <button
                   id="menu-close"
@@ -410,14 +374,11 @@ function Home() {
                     loading="lazy"
                   />
                 </div>
-                <span className="text-sm font-light text-gray-200">
-                  10K+ students and counting
-                </span>
+                <span className="text-sm font-light text-gray-200">10K+ students and counting</span>
               </div>
 
               <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold leading-[1.2] max-w-[900px] tracking-wide">
-                Navigate Your Study Abroad Journey With{' '}
-                <span className="text-[#e7a62a]">Confidence</span>
+                Navigate Your Study Abroad Journey With <span className="text-[#e7a62a]">Confidence</span>
               </h2>
 
               <div className="w-full flex flex-col md:flex-row lg:flex-col xl:flex-row gap-2">
@@ -452,11 +413,11 @@ function Home() {
                     </div>
                     <ul
                       id="educationList"
-                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${showEducationList ? 'block' : 'hidden'
-                        } z-20 shadow text-black max-h-60 overflow-y-auto`}
+                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${
+                        showEducationList ? "block" : "hidden"
+                      } z-20 shadow text-black max-h-60 overflow-y-auto`}
                     >
-                      {
-                      loading ? (
+                      {loading ? (
                         <li className="px-4 py-2 text-gray-500">Loading education levels...</li>
                       ) : error ? (
                         <li className="px-4 py-2 text-red-500">{error}</li>
@@ -507,10 +468,11 @@ function Home() {
                         </div>
                       )}
                     </div>
-                    <ul     
+                    <ul
                       id="courseList"
-                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${showCourseList ? 'block' : 'hidden'
-                        } z-20 shadow text-black max-h-60 overflow-y-auto`}
+                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${
+                        showCourseList ? "block" : "hidden"
+                      } z-20 shadow text-black max-h-60 overflow-y-auto`}
                     >
                       {loading ? (
                         <li className="px-4 py-2 text-gray-500">Loading courses...</li>
@@ -524,10 +486,11 @@ function Home() {
                           return (
                             <li
                               key={index}
-                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                              className="flex flex-col px-4 py-2 hover:bg-gray-100 cursor-pointer"
                               onClick={() => handleCourseSelect(displayText)}
                             >
-                              {displayText}
+                              <span>{displayText}</span>
+                              <span className="text-xs">{course?.study_area?.title || "No Study Area"}</span>
                             </li>
                           );
                         })
@@ -540,7 +503,6 @@ function Home() {
                     Search
                   </button>
                 </div>
-
               </div>
             </div>
 
@@ -564,11 +526,13 @@ function Home() {
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 761.7 741.1"
-                    style={{ width: '114px' }}
+                    style={{ width: "114px" }}
                   >
                     <clipPath id="shapeClip">
-                      <path d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
-                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z" />
+                      <path
+                        d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
+                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z"
+                      />
                     </clipPath>
                     <image
                       className="bg-blue-500"
@@ -585,11 +549,13 @@ function Home() {
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 761.7 741.1"
-                    style={{ width: '96px' }}
+                    style={{ width: "96px" }}
                   >
                     <clipPath id="shapeClip2">
-                      <path d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
-                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z" />
+                      <path
+                        d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
+                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z"
+                      />
                     </clipPath>
                     <image
                       className="bg-blue-500"
@@ -606,11 +572,13 @@ function Home() {
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 761.7 741.1"
-                    style={{ width: '72px' }}
+                    style={{ width: "72px" }}
                   >
                     <clipPath id="shapeClip3">
-                      <path d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
-                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z" />
+                      <path
+                        d="M280.3,32.7L70.5,185c-60,43.6-85.1,120.8-62.2,191.3l80.1,246.5c22.9,70.5,88.6,118.2,162.7,118.2h259.2
+                        c74.1,0,139.8-47.7,162.7-118.2l80.1-246.5c22.9-70.5-2.2-147.7-62.2-191.3L481.4,32.7C421.4-10.9,340.2-10.9,280.3,32.7z"
+                      />
                     </clipPath>
                     <image
                       className="bg-blue-500"
@@ -644,22 +612,25 @@ function Home() {
             <div className="lg:px-8 flex flex-col md:flex-row gap-8">
               {[
                 {
-                  img: 'img/bridging-img-1.webp',
-                  title: 'Spend less time valuating applications',
-                  desc: 'AdviseBridge ensures your applications are complete with all documents included'
+                  img: "img/bridging-img-1.webp",
+                  title: "Spend less time valuating applications",
+                  desc: "AdviseBridge ensures your applications are complete with all documents included",
                 },
                 {
-                  img: 'img/bridging-img-2.webp',
-                  title: 'Access global market and reputation',
-                  desc: 'AdviseBridge offers expert consultation for studying abroad'
+                  img: "img/bridging-img-2.webp",
+                  title: "Access global market and reputation",
+                  desc: "AdviseBridge offers expert consultation for studying abroad",
                 },
                 {
-                  img: 'img/bridging-img-3.webp',
-                  title: 'Tools to organize your school search',
-                  desc: 'Powerful tools to connect you with your choice schools & programs'
-                }
+                  img: "img/bridging-img-3.webp",
+                  title: "Tools to organize your school search",
+                  desc: "Powerful tools to connect you with your choice schools & programs",
+                },
               ].map((item, index) => (
-                <div key={index} className="flex-1 overflow-hidden cursor-auto border-gray-300 md:border-none px-8 lg:px-0">
+                <div
+                  key={index}
+                  className="flex-1 overflow-hidden cursor-auto border-gray-300 md:border-none px-8 lg:px-0"
+                >
                   <div className="w-full overflow-hidden box-design mb-4 lg:mb-8">
                     <img
                       src={item.img}
@@ -668,9 +639,7 @@ function Home() {
                       loading="lazy"
                     />
                   </div>
-                  <h6 className="text-gray-900 text-lg lg:text-xl font-bold leading-6 mb-2">
-                    {item.title}
-                  </h6>
+                  <h6 className="text-gray-900 text-lg lg:text-xl font-bold leading-6 mb-2">{item.title}</h6>
                   <p className="text-gray-700 text-sm lg:text-base font-light">{item.desc}</p>
                 </div>
               ))}
@@ -691,11 +660,10 @@ function Home() {
             <div className="px-8 lg:mb-4 flex flex-col xl:flex-row gap-8 xl:gap-16 bg-transparent relative">
               <div className="full xl:w-1/3 order-2 xl:order-1">
                 <p className="text-gray-700 text-base mb-4 lg:mb-8 lg:max-w-[800px] hidden xl:block">
-                  Quality-driven approach to international study applications. Today, embarking on your global academic journey is just a few clicks away.
+                  Quality-driven approach to international study applications. Today, embarking on your global academic
+                  journey is just a few clicks away.
                 </p>
-                <h5 className="text-base font-bold text-gray-900 mb-4">
-                  Begin with these trending majors
-                </h5>
+                <h5 className="text-base font-bold text-gray-900 mb-4">Begin with these trending majors</h5>
                 <div className="btn-wrap flex flex-wrap">
                   <a
                     href="/trending_majors"
@@ -709,26 +677,17 @@ function Home() {
               <div className="full xl:w-2/3 order-1 xl:order-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 xl:gap-6 mx-auto">
                   {[
-                    { src: 'img/trending-1.gif', title: 'Business and Management' },
-                    { src: 'img/trending-2.gif', title: 'Health and Life Science' },
-                    { src: 'img/trending-3.gif', title: 'Education and Human Development' },
-                    { src: 'img/trending-4.gif', title: 'Law, Policy and Public Services' }
+                    { src: "img/trending-1.gif", title: "Business and Management" },
+                    { src: "img/trending-2.gif", title: "Health and Life Science" },
+                    { src: "img/trending-3.gif", title: "Education and Human Development" },
+                    { src: "img/trending-4.gif", title: "Law, Policy and Public Services" },
                   ].map((item, index) => (
                     <div
                       key={index}
                       className="md:aspect-square bg-white flex flex-col justify-center items-center text-center rounded-lg lg:rounded-xl shadow-lg p-3"
                     >
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        loading="lazy"
-                        width="72"
-                        height="72"
-                        className="mb-4"
-                      />
-                      <h6 className="text-sm text-gray-900 font-medium mb-2 md:mb-0">
-                        {item.title}
-                      </h6>
+                      <img src={item.src} alt={item.title} loading="lazy" width="72" height="72" className="mb-4" />
+                      <h6 className="text-sm text-gray-900 font-medium mb-2 md:mb-0">{item.title}</h6>
                     </div>
                   ))}
                 </div>
@@ -750,14 +709,16 @@ function Home() {
             <div className="px-8 lg:mb-4 flex flex-col xl:flex-row gap-8 xl:gap-16 bg-transparent relative">
               <div className="full xl:w-1/3 order-2 xl:order-1">
                 <p className="text-gray-700 text-base mb-4 lg:mb-8 lg:max-w-[800px] hidden xl:block">
-                  AdviseBridge finds your program, guides your application, and simplifies the complex visa process. No restrictions on application submissions!
+                  AdviseBridge finds your program, guides your application, and simplifies the complex visa process. No
+                  restrictions on application submissions!
                 </p>
                 <ul className="listing lg:mt-8 grid grid-cols-1 gap-x-16 gap-y-4 mb-6 lg:mb-12">
                   <li>
                     <strong>For Student:</strong> Our search engine finds your perfect program abroad efficiently.
                   </li>
                   <li>
-                    <strong>For Advisor:</strong> We connect you with international students seeking top education abroad.
+                    <strong>For Advisor:</strong> We connect you with international students seeking top education
+                    abroad.
                   </li>
                 </ul>
               </div>
@@ -845,38 +806,36 @@ function Home() {
             <div className="flex flex-col lg:flex-row justify-between gap-6 relative z-2">
               {[
                 {
-                  title: 'Why college matters?',
-                  subtitle: 'The transformative impact of college education',
-                  desc: 'Discover the transformative power of college education in shaping careers, independence, purpose, and lifelong learning for a fulfilling life ahead.',
-                  link: '#'
+                  title: "Why college matters?",
+                  subtitle: "The transformative impact of college education",
+                  desc: "Discover the transformative power of college education in shaping careers, independence, purpose, and lifelong learning for a fulfilling life ahead.",
+                  link: "#",
                 },
                 {
-                  title: 'Paying for college',
-                  subtitle: 'How international students afford college',
-                  desc: 'Explore strategies and resources for international students to finance their education in the US amidst high tuition fees, including scholarships.',
-                  link: '#'
-                }
+                  title: "Paying for college",
+                  subtitle: "How international students afford college",
+                  desc: "Explore strategies and resources for international students to finance their education in the US amidst high tuition fees, including scholarships.",
+                  link: "#",
+                },
               ].map((item, index) => (
                 <div
                   key={index}
-                  className={`w-full lg:w-1/2 bg-none lg:bg-gradient-to-b from-[#296be3] to-[#21186b] ${index === 0
-                    ? 'pt-8 pb-0 lg:p-8 lg:py-16 lg:pt-12 lg:rounded-br-xl lg:rounded-tr-xl'
-                    : 'pt-0 pb-8 lg:p-8 lg:py-16 lg:pt-12 lg:pl-12 lg:rounded-bl-xl lg:rounded-tl-xl'
-                    }`}
+                  className={`w-full lg:w-1/2 bg-none lg:bg-gradient-to-b from-[#296be3] to-[#21186b] ${
+                    index === 0
+                      ? "pt-8 pb-0 lg:p-8 lg:py-16 lg:pt-12 lg:rounded-br-xl lg:rounded-tr-xl"
+                      : "pt-0 pb-8 lg:p-8 lg:py-16 lg:pt-12 lg:pl-12 lg:rounded-bl-xl lg:rounded-tl-xl"
+                  }`}
                 >
                   <div
-                    className={`max-w-[1200px] w-full mx-auto px-8 lg:px-4 py-2 ${index === 0 ? 'lg:pl-0' : 'lg:pr-0'
-                      } text-white grid grid-cols-1 gap-2 lg:gap-3`}
+                    className={`max-w-[1200px] w-full mx-auto px-8 lg:px-4 py-2 ${
+                      index === 0 ? "lg:pl-0" : "lg:pr-0"
+                    } text-white grid grid-cols-1 gap-2 lg:gap-3`}
                   >
                     <div className="mb-0 py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
-                      <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
-                        {item.title}
-                      </h2>
+                      <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">{item.title}</h2>
                       <hr className="w-12 border-t-2 border-[#fff] mb-4" />
                       <h5 className="text-base font-medium text-white">{item.subtitle}</h5>
-                      <p className="text-gray-300 text-sm font-light mb-2 lg:mb-4">
-                        {item.desc}
-                      </p>
+                      <p className="text-gray-300 text-sm font-light mb-2 lg:mb-4">{item.desc}</p>
                     </div>
 
                     <div className="btn-wrap flex flex-wrap">
@@ -900,15 +859,24 @@ function Home() {
           <div className="max-w-[1400px] mx-auto px-8 flex flex-col items-center lg:flex-row gap-8 md:gap-16 bg-transparent relative">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mx-auto w-full">
               {[
-                { number: '5,000+', desc: 'Assisted international students from 15 countries worldwide', bg: 'bg-[#e6f0fc]' },
-                { number: '36+', desc: 'Top-ranked partnered institutions from USA', bg: 'bg-[#fff4e6]' },
-                { number: '300+', desc: 'Recruitment partners in 8 different nations globally', bg: 'bg-[#e6f7ea]' },
-                { number: '07+', desc: 'Years of expertise, built through dedication and experience', bg: 'bg-[#f1eefe]' }
+                {
+                  number: "5,000+",
+                  desc: "Assisted international students from 15 countries worldwide",
+                  bg: "bg-[#e6f0fc]",
+                },
+                { number: "36+", desc: "Top-ranked partnered institutions from USA", bg: "bg-[#fff4e6]" },
+                { number: "300+", desc: "Recruitment partners in 8 different nations globally", bg: "bg-[#e6f7ea]" },
+                {
+                  number: "07+",
+                  desc: "Years of expertise, built through dedication and experience",
+                  bg: "bg-[#f1eefe]",
+                },
               ].map((item, index) => (
-                <div key={index} className={`${item.bg} flex flex-col justify-center items-center text-center rounded-xl p-5 h-[200px]`}>
-                  <h2 className="mb-4 text-4xl font-bold text-gray-900 tracking-wide">
-                    {item.number}
-                  </h2>
+                <div
+                  key={index}
+                  className={`${item.bg} flex flex-col justify-center items-center text-center rounded-xl p-5 h-[200px]`}
+                >
+                  <h2 className="mb-4 text-4xl font-bold text-gray-900 tracking-wide">{item.number}</h2>
                   <h6 className="text-sm text-gray-700 font-light">{item.desc}</h6>
                 </div>
               ))}
@@ -929,9 +897,7 @@ function Home() {
                   Partners praise AdviseBridge for its efficiency, reliability, and excellent support
                 </p>
               </div>
-              <h5 className="text-base font-bold text-gray-900 mb-4">
-                See why our partners trust us
-              </h5>
+              <h5 className="text-base font-bold text-gray-900 mb-4">See why our partners trust us</h5>
               <div className="btn-wrap flex flex-wrap">
                 <a
                   href="/partners_testimonial"
@@ -946,17 +912,19 @@ function Home() {
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8 col-span-6">
                 {[
                   {
-                    quote: "I am working with AdviseBridge since they started their company. It's a great and easy platform, even their payment policy is very transparent with counselors. Highly recommended the company and am proud to be a member of AdviseBridge.",
-                    name: 'Sumit Singh',
-                    position: '- First Step, Nepal',
-                    image: 'img/partner-1.webp'
+                    quote:
+                      "I am working with AdviseBridge since they started their company. It's a great and easy platform, even their payment policy is very transparent with counselors. Highly recommended the company and am proud to be a member of AdviseBridge.",
+                    name: "Sumit Singh",
+                    position: "- First Step, Nepal",
+                    image: "img/partner-1.webp",
                   },
                   {
-                    quote: "I've had the opportunity to work with advisebridge.com, I can state this is one of the strongest platforms for connecting international students to colleges and universities abroad. I look forward to using this platform in connecting students from Vietnam to AdviseBridge partner schools.",
-                    name: 'Trung Nguyen',
-                    position: '- CaliVisa, Vietnam',
-                    image: 'img/partner-2.webp'
-                  }
+                    quote:
+                      "I've had the opportunity to work with advisebridge.com, I can state this is one of the strongest platforms for connecting international students to colleges and universities abroad. I look forward to using this platform in connecting students from Vietnam to AdviseBridge partner schools.",
+                    name: "Trung Nguyen",
+                    position: "- CaliVisa, Vietnam",
+                    image: "img/partner-2.webp",
+                  },
                 ].map((testimonial, index) => (
                   <div
                     key={index}
@@ -981,16 +949,12 @@ function Home() {
                           </g>
                         </g>
                       </svg>
-                      <p className="text-gray-700 text-sm font-light mb-4 lg:mb-6 mt-4">
-                        {testimonial.quote}
-                      </p>
+                      <p className="text-gray-700 text-sm font-light mb-4 lg:mb-6 mt-4">{testimonial.quote}</p>
                       <p className="mb-4 lg:mb-6 mt-4">
                         <span className="text-sm xl:text-base text-gray-900 capitalize font-bold mr-1">
                           {testimonial.name}
                         </span>
-                        <span className="text-xs xl:text-sm text-gray-600 font-light">
-                          {testimonial.position}
-                        </span>
+                        <span className="text-xs xl:text-sm text-gray-600 font-light">{testimonial.position}</span>
                       </p>
                     </div>
                     <div className="relative shrink-0">
@@ -1020,7 +984,8 @@ function Home() {
                 </h3>
                 <hr className="w-12 border-t-2 border-white mb-4" />
                 <p className="text-gray-300 text-sm lg:text-base mb-4 lg:mb-8 lg:max-w-[800px]">
-                  Pursue your abroad study journey today with expert guidance, personalized support, & comprehensive resources
+                  Pursue your abroad study journey today with expert guidance, personalized support, & comprehensive
+                  resources
                 </p>
               </div>
               <div className="btn-wrap flex flex-wrap">
@@ -1061,33 +1026,33 @@ function Home() {
             <div className="mx-auto mb-8 px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
               {[
                 {
-                  img: 'img/activities-1.webp',
+                  img: "img/activities-1.webp",
                   title: "Which US Universities Accept 3-Year Bachelor's Degrees...",
-                  date: 'Nov 14, 2025',
-                  desc: 'You worked hard for your 3-year bachelor\'s degree in India, Nepal...',
-                  link: '#'
+                  date: "Nov 14, 2025",
+                  desc: "You worked hard for your 3-year bachelor's degree in India, Nepal...",
+                  link: "#",
                 },
                 {
-                  img: 'img/activities-2.webp',
-                  title: 'What is Data Science & Why Study it in 2026...',
-                  date: 'Nov 06, 2025',
+                  img: "img/activities-2.webp",
+                  title: "What is Data Science & Why Study it in 2026...",
+                  date: "Nov 06, 2025",
                   desc: 'So, you\'ve probably heard the term "data science" thrown around...',
-                  link: '#'
+                  link: "#",
                 },
                 {
-                  img: 'img/activities-3.webp',
-                  title: 'American Dream for International Students in 2025...',
-                  date: 'Oct 13, 2025',
-                  desc: 'An International Student lands at JFK ( John F. Kennedy International Airport)...',
-                  link: '#'
+                  img: "img/activities-3.webp",
+                  title: "American Dream for International Students in 2025...",
+                  date: "Oct 13, 2025",
+                  desc: "An International Student lands at JFK ( John F. Kennedy International Airport)...",
+                  link: "#",
                 },
                 {
-                  img: 'img/activities-4.webp',
-                  title: 'Studying in the USA: Scholarships, Jobs, and Life Insights...',
-                  date: 'Sep 12, 2025',
-                  desc: 'Every year, thousands of young dreamers pack their bags and head..',
-                  link: '#'
-                }
+                  img: "img/activities-4.webp",
+                  title: "Studying in the USA: Scholarships, Jobs, and Life Insights...",
+                  date: "Sep 12, 2025",
+                  desc: "Every year, thousands of young dreamers pack their bags and head..",
+                  link: "#",
+                },
               ].map((blog, index) => (
                 <a key={index} href={blog.link} className="overflow-hidden group">
                   <div className="w-full overflow-hidden rounded-lg mb-6 aspect-[16/9]">
@@ -1185,57 +1150,59 @@ function Home() {
           </div>
           <div>
             <div className="mb-0 mx-auto py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
-              <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
-                Get Connected
-              </h2>
+              <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">Get Connected</h2>
               <hr className="w-12 border-t-2 border-[#fff] mb-4" />
             </div>
             <ul className="flex space-x-3 mt-0 [&>li]:before:top-[0]">
               {[
                 {
-                  href: 'https://www.facebook.com/AdviseBridge/',
+                  href: "https://www.facebook.com/AdviseBridge/",
                   icon: (
                     <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
                       <path d="M9.18848 10.125L9.6884 6.86742H6.56266V4.75348C6.56266 3.86227 6.9993 2.99355 8.39922 2.99355H9.82023V0.220078C9.82023 0.220078 8.5307 0 7.29777 0C4.72363 0 3.04105 1.56023 3.04105 4.38469V6.86742H0.179688V10.125H3.04105V18H6.56266V10.125H9.18848Z" />
                     </svg>
-                  )
+                  ),
                 },
                 {
-                  href: 'https://x.com/AdviseBridge',
+                  href: "https://x.com/AdviseBridge",
                   icon: (
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <path d="M10.7,7.3l5.9-6.9h-1.8L9.9,6.1L5.8,0.3H0.1l6.7,9.5L0,17.7h1.8L7.5,11l4.7,6.7H18L10.7,7.3z M2.8,1.8H5
-                        l10.2,14.4H13L2.8,1.8z" />
+                      <path
+                        d="M10.7,7.3l5.9-6.9h-1.8L9.9,6.1L5.8,0.3H0.1l6.7,9.5L0,17.7h1.8L7.5,11l4.7,6.7H18L10.7,7.3z M2.8,1.8H5
+                        l10.2,14.4H13L2.8,1.8z"
+                      />
                     </svg>
-                  )
+                  ),
                 },
                 {
-                  href: 'https://www.linkedin.com/company/advisebridge/',
+                  href: "https://www.linkedin.com/company/advisebridge/",
                   icon: (
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                       <path d="M4.02911 17.9996H0.297321V5.98219H4.02911V17.9996ZM2.16121 4.3429C0.967902 4.3429 0 3.35451 0 2.16121C8.54116e-09 1.58802 0.227698 1.03831 0.633002 0.633002C1.03831 0.227698 1.58802 0 2.16121 0C2.73439 0 3.2841 0.227698 3.68941 0.633002C4.09471 1.03831 4.32241 1.58802 4.32241 2.16121C4.32241 3.35451 3.35411 4.3429 2.16121 4.3429ZM17.996 17.9996H14.2722V12.1496C14.2722 10.7554 14.2441 8.96746 12.332 8.96746C10.3918 8.96746 10.0945 10.4822 10.0945 12.0492V17.9996H6.3667V5.98219H9.9458V7.62147H9.99804C10.4962 6.67728 11.7133 5.68085 13.5289 5.68085C17.3057 5.68085 18 8.1679 18 11.3983V17.9996H17.996Z" />
                     </svg>
-                  )
+                  ),
                 },
                 {
-                  href: 'https://www.instagram.com/advisebridges/',
+                  href: "https://www.instagram.com/advisebridges/",
                   icon: (
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                       <path d="M9.00201 4.386C6.44808 4.386 4.38806 6.44601 4.38806 8.99995C4.38806 11.5539 6.44808 13.6139 9.00201 13.6139C11.5559 13.6139 13.616 11.5539 13.616 8.99995C13.616 6.44601 11.5559 4.386 9.00201 4.386ZM9.00201 11.9996C7.35159 11.9996 6.00234 10.6544 6.00234 8.99995C6.00234 7.34551 7.34757 6.00028 9.00201 6.00028C10.6564 6.00028 12.0017 7.34551 12.0017 8.99995C12.0017 10.6544 10.6524 11.9996 9.00201 11.9996ZM14.8809 4.19727C14.8809 4.7956 14.399 5.27345 13.8047 5.27345C13.2064 5.27345 12.7285 4.79158 12.7285 4.19727C12.7285 3.60296 13.2104 3.12108 13.8047 3.12108C14.399 3.12108 14.8809 3.60296 14.8809 4.19727ZM17.9368 5.28952C17.8685 3.84791 17.5392 2.57094 16.4831 1.51885C15.431 0.466761 14.154 0.13748 12.7124 0.0651991C11.2267 -0.0191289 6.77334 -0.0191289 5.28756 0.0651991C3.84997 0.133465 2.57301 0.462745 1.5169 1.51484C0.460792 2.56693 0.135527 3.84389 0.063246 5.2855C-0.021082 6.77128 -0.021082 11.2246 0.063246 12.7104C0.131511 14.152 0.460792 15.4289 1.5169 16.481C2.57301 17.5331 3.84596 17.8624 5.28756 17.9347C6.77334 18.019 11.2267 18.019 12.7124 17.9347C14.154 17.8664 15.431 17.5371 16.4831 16.481C17.5352 15.4289 17.8645 14.152 17.9368 12.7104C18.0211 11.2246 18.0211 6.77529 17.9368 5.28952ZM16.0173 14.3046C15.7041 15.0916 15.0977 15.698 14.3066 16.0152C13.122 16.4851 10.3111 16.3766 9.00201 16.3766C7.69292 16.3766 4.87797 16.481 3.69738 16.0152C2.91032 15.702 2.30396 15.0957 1.98673 14.3046C1.5169 13.12 1.62532 10.309 1.62532 8.99995C1.62532 7.69085 1.52091 4.87591 1.98673 3.69532C2.29994 2.90826 2.9063 2.3019 3.69738 1.98466C4.88199 1.51484 7.69292 1.62326 9.00201 1.62326C10.3111 1.62326 13.126 1.51885 14.3066 1.98466C15.0937 2.29788 15.7001 2.90424 16.0173 3.69532C16.4871 4.87992 16.3787 7.69085 16.3787 8.99995C16.3787 10.309 16.4871 13.124 16.0173 14.3046Z" />
                     </svg>
-                  )
+                  ),
                 },
                 {
-                  href: 'https://www.youtube.com/@AdviseBridge',
+                  href: "https://www.youtube.com/@AdviseBridge",
                   icon: (
                     <svg width="18" height="18" viewBox="0 0 50 50" fill="none">
-                      <path d="M49.5,15c0,0-0.5-3.4-2-5c-1.9-2-4-2-5-2.1C35.5,7.4,25,7.4,25,7.4h0c0,0-10.5,0-17.5,0.5c-1,0.1-3.1,0.1-5,2.1
+                      <path
+                        d="M49.5,15c0,0-0.5-3.4-2-5c-1.9-2-4-2-5-2.1C35.5,7.4,25,7.4,25,7.4h0c0,0-10.5,0-17.5,0.5c-1,0.1-3.1,0.1-5,2.1
                         c-1.5,1.5-2,5-2,5S0,19,0,23.1v3.8c0,4,0.5,8.1,0.5,8.1s0.5,3.4,2,5c1.9,2,4.4,1.9,5.5,2.1c4,0.4,17,0.5,17,0.5s10.5,0,17.5-0.5
                         c1-0.1,3.1-0.1,5-2.1c1.5-1.5,2,5,2,5s0.5,4,0.5,8.1v-3.8C50,19.1,49.5,15,49.5,15L49.5,15L49.5,15L49.5,15z M19.8,31.5V17.4l13.5,7
-                        L19.8,31.5z" />
+                        L19.8,31.5z"
+                      />
                     </svg>
-                  )
-                }
+                  ),
+                },
               ].map((social, index) => (
                 <li key={index}>
                   <a
@@ -1256,41 +1223,41 @@ function Home() {
           <div className="flex flex-wrap xl:justify-between gap-y-4 text-sm text-mywhitelighttext">
             {[
               {
-                title: 'Company',
+                title: "Company",
                 links: [
-                  { label: 'About', href: '/about' },
-                  { label: 'Career', href: '/career' },
-                  { label: 'Contact Us', href: '/contact' },
-                  { label: 'Achievement', href: '/achievement' }
-                ]
+                  { label: "About", href: "/about" },
+                  { label: "Career", href: "/career" },
+                  { label: "Contact Us", href: "/contact" },
+                  { label: "Achievement", href: "/achievement" },
+                ],
               },
               {
-                title: 'Services',
+                title: "Services",
                 links: [
-                  { label: 'Students', href: '/students' },
-                  { label: 'Advisors', href: '/advisors' },
-                  { label: 'Institutions', href: '/institutions' },
-                  { label: 'Explore', href: '/explore' }
-                ]
+                  { label: "Students", href: "/students" },
+                  { label: "Advisors", href: "/advisors" },
+                  { label: "Institutions", href: "/institutions" },
+                  { label: "Explore", href: "/explore" },
+                ],
               },
               {
-                title: 'Legal',
+                title: "Legal",
                 links: [
-                  { label: 'Terms & conditions', href: '/terms_conditions' },
-                  { label: 'Disclaimer', href: '/disclaimer' },
-                  { label: 'Privacy policy', href: '/privacy_policy' },
-                  { label: 'Refund policy', href: '/refund_policy' },
-                  { label: 'Cost policy', href: '/cost_policy' }
-                ]
+                  { label: "Terms & conditions", href: "/terms_conditions" },
+                  { label: "Disclaimer", href: "/disclaimer" },
+                  { label: "Privacy policy", href: "/privacy_policy" },
+                  { label: "Refund policy", href: "/refund_policy" },
+                  { label: "Cost policy", href: "/cost_policy" },
+                ],
               },
               {
-                title: 'Resources',
+                title: "Resources",
                 links: [
-                  { label: 'Blogs', href: '/blogs' },
-                  { label: 'FAQs', href: '/faqs' },
-                  { label: 'Eligibility Criteria', href: '/eligibility_criteria' }
-                ]
-              }
+                  { label: "Blogs", href: "/blogs" },
+                  { label: "FAQs", href: "/faqs" },
+                  { label: "Eligibility Criteria", href: "/eligibility_criteria" },
+                ],
+              },
             ].map((section, index) => (
               <div key={index} className="w-1/2 md:w-1/3 xl:w-1/5 mb-4">
                 <h5 className="text-base font-bold text-white mb-6">{section.title}</h5>
@@ -1305,25 +1272,20 @@ function Home() {
             ))}
 
             <div className="w-full md:w-1/3 xl:w-1/5 mb-4">
-              <img
-                src="img/logo/logo_white.svg"
-                alt="Advise Bridge Logo"
-                className="w-48 h-auto mb-4"
-                loading="lazy"
-              />
+              <img src="img/logo/logo_white.svg" alt="Advise Bridge Logo" className="w-48 h-auto mb-4" loading="lazy" />
               <p className="text-gray-300 text-sm font-light mb-3 lg:mb-6">
                 AdviseBridge connects students & institutions globally.
               </p>
               <div className="flex flex-wrap gap-4">
                 {[
                   {
-                    href: 'https://www.icef.com/agency-accreditation-agencies-only/',
-                    img: 'img/achievement-1.webp'
+                    href: "https://www.icef.com/agency-accreditation-agencies-only/",
+                    img: "img/achievement-1.webp",
                   },
                   {
-                    href: 'https://isana.org.au/',
-                    img: 'img/achievement-2.webp'
-                  }
+                    href: "https://isana.org.au/",
+                    img: "img/achievement-2.webp",
+                  },
                 ].map((achievement, idx) => (
                   <a
                     key={idx}
@@ -1332,12 +1294,7 @@ function Home() {
                     rel="noopener noreferrer"
                     className="bg-white rounded w-16 h-16 flex justify-center items-center cursor-pointer"
                   >
-                    <img
-                      src={achievement.img}
-                      alt="Achievement"
-                      className="w-[60%]"
-                      loading="lazy"
-                    />
+                    <img src={achievement.img} alt="Achievement" className="w-[60%]" loading="lazy" />
                   </a>
                 ))}
               </div>
@@ -1346,9 +1303,7 @@ function Home() {
         </div>
         <div className="mt-6 lg:mt-12 border-t border-white/7 pt-2 lg:pt-12">
           <div className="max-w-[1400px] px-8 py-4 lg:py-0 mx-auto">
-            <p className="text-gray-300 text-sm font-light mb-2 lg:mb-4">
-              AdviseBridge © 2025. All rights reserved.
-            </p>
+            <p className="text-gray-300 text-sm font-light mb-2 lg:mb-4">AdviseBridge © 2025. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -1356,14 +1311,15 @@ function Home() {
       {/* Scroll to Top Button */}
       <button
         id="scrollToTopBtn"
-        className={`${showScrollTop ? 'block' : 'hidden'
-          } bg-gradient-to-br from-[#026d44] to-[#005c36] hover:from-[#029c75] hover:to-[#004327] text-white px-3 py-3 rounded-full transition-all duration-300 drop-shadow-[0_8px_8px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_8px_8px_rgba(0,0,0,0.7)] fixed bottom-4 right-4 z-10 cursor-pointer`}
+        className={`${
+          showScrollTop ? "block" : "hidden"
+        } bg-gradient-to-br from-[#026d44] to-[#005c36] hover:from-[#029c75] hover:to-[#004327] text-white px-3 py-3 rounded-full transition-all duration-300 drop-shadow-[0_8px_8px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_8px_8px_rgba(0,0,0,0.7)] fixed bottom-4 right-4 z-10 cursor-pointer`}
         onClick={scrollToTop}
       >
         <ArrowUp size={24} />
       </button>
     </div>
   );
-};
+}
 
 export default Home;
