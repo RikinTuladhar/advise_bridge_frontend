@@ -3,8 +3,9 @@ import {
   ArrowRight, MailOpen, Calendar, CircleX, GraduationCap, Book,
   XCircle, ArrowUp, Menu, X, ChevronDown
 } from 'lucide-react';
+import axios from 'axios';
 
-function Home()  {
+function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState({ lang: 'English', flag: 'us' });
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -13,32 +14,21 @@ function Home()  {
   const [courseSearch, setCourseSearch] = useState('');
   const [showEducationList, setShowEducationList] = useState(false);
   const [showCourseList, setShowCourseList] = useState(false);
-  
+
+  // API data states
+  const [educationLevels, setEducationLevels] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const langMenuRef = useRef(null);
   const educationListRef = useRef(null);
   const courseListRef = useRef(null);
-  
-  // Sample data for dropdowns
-  const educationLevels = [
-    'High School',
-    'Associate Degree',
-    'Bachelor\'s Degree',
-    'Master\'s Degree',
-    'Doctoral Degree',
-    'Certificate Program'
-  ];
-  
-  const courses = [
-    'Business Administration',
-    'Computer Science',
-    'Engineering',
-    'Medicine',
-    'Law',
-    'Arts & Humanities',
-    'Sciences',
-    'Social Sciences'
-  ];
-  
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const languages = [
     { lang: 'English', flag: 'us' },
     { lang: 'Korean', flag: 'kr' },
@@ -46,6 +36,92 @@ function Home()  {
     { lang: 'Vietnamese', flag: 'vn' },
     { lang: 'French', flag: 'fr' }
   ];
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching API from: https://advisebridge.com/api/v1/search/filters');
+
+        const response = await axios.get('https://advisebridge.com/api/v1/search/filters');
+
+        // Debug log
+        console.log('=== API RESPONSE DEBUG ===');
+        console.log('Status:', response.status);
+        console.log('Full response:', response);
+        console.log('Response data:', response.data.educationLevels);
+        console.log('Response keys:', Object.keys(response.data));
+        console.log('Response.data.data:', response.data?.data);
+        console.log('==========================');
+
+        // Handle different possible API structures
+        if (response.data) {
+          // Try nested structure first
+          if (response.data.data) {
+            console.log(response.data);
+            const { educationLevels, courses } = response.data.data;
+            console.log('Using nested structure');
+            console.log('Education levels found:', educationLevels?.length);
+            console.log('Courses found:', courses?.length);
+            setEducationLevels(educationLevels || []);
+            setCourses(courses || []);
+          }
+          // Try direct structure
+          else if (response.data.educationLevels || response.data.courses) {
+            console.log('Using direct structure');
+            setEducationLevels(response.data.educationLevels || []);
+            setCourses(response.data.courses || []);
+          }
+          // Try alternative property names
+          else {
+            console.log('Checking for alternative property names');
+            const data = response.data;
+            setEducationLevels(
+              data.education_levels ||
+              data.educations ||
+              data.levels ||
+              []
+            );
+            setCourses(
+              data.programs ||
+              data.majors ||
+              data.subjects ||
+              []
+            );
+          }
+        }
+
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load filter data: ' + err.message);
+        setLoading(false);
+        console.error('Error fetching filters:', err);
+
+        // Fallback to sample data if API fails
+        setEducationLevels([
+          'High School',
+          'Associate Degree',
+          'Bachelor\'s Degree',
+          'Master\'s Degree',
+          'Doctoral Degree',
+          'Certificate Program'
+        ]);
+
+        setCourses([
+          'Business Administration',
+          'Computer Science',
+          'Engineering',
+          'Medicine',
+          'Law',
+          'Arts & Humanities',
+          'Sciences',
+          'Social Sciences'
+        ]);
+      }
+    };
+    fetchFilters();
+  }, []);
 
   // Handle click outside for dropdowns
   useEffect(() => {
@@ -102,6 +178,28 @@ function Home()  {
     setCourseSearch('');
   };
 
+  // Helper function to extract display text from API data
+  const getDisplayText = (item) => {
+    // Check if API returns objects or strings
+    if (typeof item === 'object') {
+      // Adjust property names based on actual API response structure
+      return item.name || item.title || item.label || JSON.stringify(item);
+    }
+    return item;
+  };
+
+  // Filter education levels based on search
+  const filteredEducationLevels = educationLevels.filter(item => {
+    const displayText = getDisplayText(item).toLowerCase();
+    return displayText.includes(educationSearch.toLowerCase());
+  });
+
+  // Filter courses based on search
+  const filteredCourses = courses.filter(item => {
+    const displayText = getDisplayText(item).toLowerCase();
+    return displayText.includes(courseSearch.toLowerCase());
+  });
+
   // Marquee animation effect
   useEffect(() => {
     const marquee = document.getElementById('marquee');
@@ -109,10 +207,10 @@ function Home()  {
       const container = document.getElementById('marquee-container');
       const clone = marquee.cloneNode(true);
       container.appendChild(clone);
-      
+
       let position = 0;
       const speed = 1;
-      
+
       const animate = () => {
         position -= speed;
         if (position <= -marquee.offsetWidth) {
@@ -124,7 +222,7 @@ function Home()  {
         }
         requestAnimationFrame(animate);
       };
-      
+
       animate();
     }
   }, []);
@@ -156,9 +254,8 @@ function Home()  {
 
               <div
                 id="lang-menu"
-                className={`${
-                  isLangMenuOpen ? 'block' : 'hidden'
-                } absolute z-50 right-0 mt-0 w-40 bg-white rounded-lg text-gray-700 shadow-2xl overflow-hidden`}
+                className={`${isLangMenuOpen ? 'block' : 'hidden'
+                  } absolute z-50 right-0 mt-0 w-40 bg-white rounded-lg text-gray-700 shadow-2xl overflow-hidden`}
               >
                 <ul>
                   {languages.map(({ lang, flag }) => (
@@ -197,9 +294,8 @@ function Home()  {
               </div>
               <nav
                 id="mobile-nav"
-                className={`${
-                  isMenuOpen ? 'flex' : 'hidden'
-                } lg:flex min-h-screen lg:min-h-auto w-full justify-center lg:justify-end items-center fixed left-0 right-0 top-0 bottom-0 z-50 lg:relative bg-[#1a1e6b] lg:bg-transparent`}
+                className={`${isMenuOpen ? 'flex' : 'hidden'
+                  } lg:flex min-h-screen lg:min-h-auto w-full justify-center lg:justify-end items-center fixed left-0 right-0 top-0 bottom-0 z-50 lg:relative bg-[#1a1e6b] lg:bg-transparent`}
               >
                 <button
                   id="menu-close"
@@ -331,11 +427,12 @@ function Home()  {
                       <input
                         type="text"
                         id="educationSearch"
-                        placeholder="Select Education Level"
+                        placeholder={loading ? "Loading education levels..." : "Select Education Level"}
                         className="text-gray-800 placeholder-gray-500 w-full bg-white border border-gray-300 rounded p-3 pl-11 pr-11 outline-none"
                         value={educationSearch}
                         onChange={(e) => setEducationSearch(e.target.value)}
                         onFocus={() => setShowEducationList(true)}
+                        disabled={loading}
                       />
                       <div
                         id="courseIcon"
@@ -343,33 +440,42 @@ function Home()  {
                       >
                         <GraduationCap className="stroke-gray-500 stroke-[1.5] w-6 h-6" />
                       </div>
-                      <div
-                        id="educationClear"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 clear-icon text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
-                        onClick={clearEducationSearch}
-                      >
-                        <XCircle />
-                      </div>
+                      {educationSearch && (
+                        <div
+                          id="educationClear"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 clear-icon text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
+                          onClick={clearEducationSearch}
+                        >
+                          <XCircle />
+                        </div>
+                      )}
                     </div>
                     <ul
                       id="educationList"
-                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${
-                        showEducationList ? 'block' : 'hidden'
-                      } z-20 shadow text-black max-h-60 overflow-y-auto`}
+                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${showEducationList ? 'block' : 'hidden'
+                        } z-20 shadow text-black max-h-60 overflow-y-auto`}
                     >
-                      {educationLevels
-                        .filter((level) =>
-                          level.toLowerCase().includes(educationSearch.toLowerCase())
-                        )
-                        .map((level) => (
-                          <li
-                            key={level}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleEducationSelect(level)}
-                          >
-                            {level}
-                          </li>
-                        ))}
+                      {
+                      loading ? (
+                        <li className="px-4 py-2 text-gray-500">Loading education levels...</li>
+                      ) : error ? (
+                        <li className="px-4 py-2 text-red-500">{error}</li>
+                      ) : filteredEducationLevels.length === 0 ? (
+                        <li className="px-4 py-2 text-gray-500">No results found</li>
+                      ) : (
+                        filteredEducationLevels.map((level, index) => {
+                          const displayText = getDisplayText(level);
+                          return (
+                            <li
+                              key={index}
+                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => handleEducationSelect(displayText)}
+                            >
+                              {displayText}
+                            </li>
+                          );
+                        })
+                      )}
                     </ul>
                   </div>
 
@@ -378,11 +484,12 @@ function Home()  {
                       <input
                         type="text"
                         id="courseSearch"
-                        placeholder="Select Course/Program"
+                        placeholder={loading ? "Loading courses..." : "Select Course/Program"}
                         className="text-gray-800 placeholder-gray-500 w-full bg-white border border-gray-300 rounded p-3 pl-11 pr-11 outline-none"
                         value={courseSearch}
                         onChange={(e) => setCourseSearch(e.target.value)}
                         onFocus={() => setShowCourseList(true)}
+                        disabled={loading}
                       />
                       <div
                         id="educationIcon"
@@ -390,41 +497,50 @@ function Home()  {
                       >
                         <Book className="stroke-gray-500 stroke-[1.5] w-5 h-5" />
                       </div>
-                      <div
-                        id="courseClear"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 clear-icon text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
-                        onClick={clearCourseSearch}
-                      >
-                        <XCircle />
-                      </div>
+                      {courseSearch && (
+                        <div
+                          id="courseClear"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 clear-icon text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
+                          onClick={clearCourseSearch}
+                        >
+                          <XCircle />
+                        </div>
+                      )}
                     </div>
-                    <ul
+                    <ul     
                       id="courseList"
-                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${
-                        showCourseList ? 'block' : 'hidden'
-                      } z-20 shadow text-black max-h-60 overflow-y-auto`}
+                      className={`absolute w-full bg-white border rounded mt-1 dropdown-list ${showCourseList ? 'block' : 'hidden'
+                        } z-20 shadow text-black max-h-60 overflow-y-auto`}
                     >
-                      {courses
-                        .filter((course) =>
-                          course.toLowerCase().includes(courseSearch.toLowerCase())
-                        )
-                        .map((course) => (
-                          <li
-                            key={course}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleCourseSelect(course)}
-                          >
-                            {course}
-                          </li>
-                        ))}
+                      {loading ? (
+                        <li className="px-4 py-2 text-gray-500">Loading courses...</li>
+                      ) : error ? (
+                        <li className="px-4 py-2 text-red-500">{error}</li>
+                      ) : filteredCourses.length === 0 ? (
+                        <li className="px-4 py-2 text-gray-500">No results found</li>
+                      ) : (
+                        filteredCourses.map((course, index) => {
+                          const displayText = getDisplayText(course);
+                          return (
+                            <li
+                              key={index}
+                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => handleCourseSelect(displayText)}
+                            >
+                              {displayText}
+                            </li>
+                          );
+                        })
+                      )}
                     </ul>
                   </div>
                 </div>
                 <div className="btn-wrap">
-                  <a className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">
+                  <button className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">
                     Search
-                  </a>
+                  </button>
                 </div>
+
               </div>
             </div>
 
@@ -743,16 +859,14 @@ function Home()  {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className={`w-full lg:w-1/2 bg-none lg:bg-gradient-to-b from-[#296be3] to-[#21186b] ${
-                    index === 0
-                      ? 'pt-8 pb-0 lg:p-8 lg:py-16 lg:pt-12 lg:rounded-br-xl lg:rounded-tr-xl'
-                      : 'pt-0 pb-8 lg:p-8 lg:py-16 lg:pt-12 lg:pl-12 lg:rounded-bl-xl lg:rounded-tl-xl'
-                  }`}
+                  className={`w-full lg:w-1/2 bg-none lg:bg-gradient-to-b from-[#296be3] to-[#21186b] ${index === 0
+                    ? 'pt-8 pb-0 lg:p-8 lg:py-16 lg:pt-12 lg:rounded-br-xl lg:rounded-tr-xl'
+                    : 'pt-0 pb-8 lg:p-8 lg:py-16 lg:pt-12 lg:pl-12 lg:rounded-bl-xl lg:rounded-tl-xl'
+                    }`}
                 >
                   <div
-                    className={`max-w-[1200px] w-full mx-auto px-8 lg:px-4 py-2 ${
-                      index === 0 ? 'lg:pl-0' : 'lg:pr-0'
-                    } text-white grid grid-cols-1 gap-2 lg:gap-3`}
+                    className={`max-w-[1200px] w-full mx-auto px-8 lg:px-4 py-2 ${index === 0 ? 'lg:pl-0' : 'lg:pr-0'
+                      } text-white grid grid-cols-1 gap-2 lg:gap-3`}
                   >
                     <div className="mb-0 py-2 lg:pl-0 text-white grid grid-cols-1 gap-2 lg:gap-3">
                       <h2 className="text-2xl lg:text-2xl font-bold leading-[1.2] max-w-[600px]">
@@ -950,7 +1064,7 @@ function Home()  {
                   img: 'img/activities-1.webp',
                   title: "Which US Universities Accept 3-Year Bachelor's Degrees...",
                   date: 'Nov 14, 2025',
-                  desc: 'You worked hard for your 3-year bachelor’s degree in India, Nepal...',
+                  desc: 'You worked hard for your 3-year bachelor\'s degree in India, Nepal...',
                   link: '#'
                 },
                 {
@@ -1062,9 +1176,9 @@ function Home()  {
                   </div>
                 </div>
                 <div className="btn-wrap">
-                  <a className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">
+                  <button className="min-w-[160px] min-h-[50px] bg-[#3c65e3] px-6 py-2 text-[#CBD5E1] rounded lg:text-[#fff] hover:bg-[#2b54d2] hover:text-[#8ba5e0] lg:hover:text-[#fff] font-normal transition w-full lg:w-auto flex justify-center items-center cursor-pointer">
                     Subscribe
-                  </a>
+                  </button>
                 </div>
               </div>
             </form>
@@ -1117,7 +1231,7 @@ function Home()  {
                     <svg width="18" height="18" viewBox="0 0 50 50" fill="none">
                       <path d="M49.5,15c0,0-0.5-3.4-2-5c-1.9-2-4-2-5-2.1C35.5,7.4,25,7.4,25,7.4h0c0,0-10.5,0-17.5,0.5c-1,0.1-3.1,0.1-5,2.1
                         c-1.5,1.5-2,5-2,5S0,19,0,23.1v3.8c0,4,0.5,8.1,0.5,8.1s0.5,3.4,2,5c1.9,2,4.4,1.9,5.5,2.1c4,0.4,17,0.5,17,0.5s10.5,0,17.5-0.5
-                        c1-0.1,3.1-0.1,5-2.1c1.5-1.5,2-5,2-5s0.5-4,0.5-8.1v-3.8C50,19.1,49.5,15,49.5,15L49.5,15L49.5,15L49.5,15z M19.8,31.5V17.4l13.5,7
+                        c1-0.1,3.1-0.1,5-2.1c1.5-1.5,2,5,2,5s0.5,4,0.5,8.1v-3.8C50,19.1,49.5,15,49.5,15L49.5,15L49.5,15L49.5,15z M19.8,31.5V17.4l13.5,7
                         L19.8,31.5z" />
                     </svg>
                   )
@@ -1242,9 +1356,8 @@ function Home()  {
       {/* Scroll to Top Button */}
       <button
         id="scrollToTopBtn"
-        className={`${
-          showScrollTop ? 'block' : 'hidden'
-        } bg-gradient-to-br from-[#026d44] to-[#005c36] hover:from-[#029c75] hover:to-[#004327] text-white px-3 py-3 rounded-full transition-all duration-300 drop-shadow-[0_8px_8px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_8px_8px_rgba(0,0,0,0.7)] fixed bottom-4 right-4 z-10 cursor-pointer`}
+        className={`${showScrollTop ? 'block' : 'hidden'
+          } bg-gradient-to-br from-[#026d44] to-[#005c36] hover:from-[#029c75] hover:to-[#004327] text-white px-3 py-3 rounded-full transition-all duration-300 drop-shadow-[0_8px_8px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_8px_8px_rgba(0,0,0,0.7)] fixed bottom-4 right-4 z-10 cursor-pointer`}
         onClick={scrollToTop}
       >
         <ArrowUp size={24} />
